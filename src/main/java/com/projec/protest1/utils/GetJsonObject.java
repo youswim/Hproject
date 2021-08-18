@@ -44,7 +44,7 @@ public class GetJsonObject {
 
         for (int i = 0; i < jsonArray.length(); i++) {
             JSONObject tempObj = jsonArray.getJSONObject(i);
-            System.out.println(tempObj);
+            //System.out.println(tempObj);
             roadDto = new RoadDto(tempObj);
 
             roadDtoList.add(roadDto);
@@ -55,7 +55,6 @@ public class GetJsonObject {
     public List<RoadInfoDto> fromJsonToRoadInfoDto(JSONObject jsonObject, String str){
 
         JSONObject parsed_Obj = jsonObject.getJSONObject(str);
-
         JSONArray jsonArray = parsed_Obj.getJSONArray("row");
         List<RoadInfoDto> roadInfoDtoList = new ArrayList<>();
 
@@ -63,7 +62,7 @@ public class GetJsonObject {
 
         for (int i = 0; i < jsonArray.length(); i++) {
             JSONObject tempObj = jsonArray.getJSONObject(i);
-            System.out.println(tempObj);
+            //System.out.println(tempObj);
             roadInfoDto = new RoadInfoDto(tempObj);
 
             roadInfoDtoList.add(roadInfoDto);
