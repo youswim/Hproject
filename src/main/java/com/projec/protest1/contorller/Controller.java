@@ -24,9 +24,10 @@ public class Controller {
         int start = 1;
         int end = 169;
         String str = "SpotInfo";
-        String url = "http://openapi.seoul.go.kr:8088/" + key + "/xml/"+ str+"/" + start + "/" + end + "/";
+        String url = "http://openapi.seoul.go.kr:8088/" + key + "/xml/" + str + "/" + start + "/" + end + "/";
 
         return getJsonObject.formJsonToRoadDto(getJsonObject.getJsonObject(url), str);
+        //roadDto 리스트를 클라이언트에 전달
     }
 
     @GetMapping("/api/road_info/{rid}/{yyyymmdd}/{time}")
@@ -38,9 +39,10 @@ public class Controller {
         int end = 10;
         String str = "VolInfo";
         String url = "http://openapi.seoul.go.kr:8088/"
-                +key+"/xml/"+str+"/"+start+"/"+end+"/"+rid+"/"+yyyymmdd+"/"+time+"/";
+                + key + "/xml/" + str + "/" + start + "/" + end + "/" + rid + "/" + yyyymmdd + "/" + time + "/";
 
         return getJsonObject.fromJsonToRoadInfoDto(getJsonObject.getJsonObject(url), str);
+        //roadInfoDto 리스트를 클라이언트에 전달
 
     }
 }

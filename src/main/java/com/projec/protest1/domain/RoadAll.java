@@ -33,7 +33,7 @@ public class RoadAll {
     @Column(nullable = false)
     private int vol;
 
-    public RoadAll(RoadAllDto roadAllDto){
+    public RoadAll(RoadAllDto roadAllDto) {
         this.Road_id = roadAllDto.getRoad_id();
         this.date = roadAllDto.getDate();
         this.time = roadAllDto.getTime();

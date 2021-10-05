@@ -28,13 +28,13 @@ function imageOnclick() {
     if (!paused) createImageLayer();
 }
 
-function ShowRoads(){
+function ShowRoads() {
     $.ajax({
         type: 'GET',
         url: '/api/roads',
-        success: function(response){
+        success: function (response) {
             console.log("반응 성공");
-            for(let i=0; i<response.length; i++){
+            for (let i = 0; i < response.length; i++) {
                 let road = response[i];
                 let tempHtml = AddRoad(road);
                 $('#roads').append(tempHtml);
@@ -43,16 +43,16 @@ function ShowRoads(){
     })
 }
 
-function AddRoad(road){
+function AddRoad(road) {
     return `<div>${road.spot_nm}</div>
             <div>${road.spot_num}</div>`
 }
 
-function ShowRoadInfo(){
+function ShowRoadInfo() {
     let roadId = $('#roadId').val();
     let date = $('#date').val();
     let time = $('#time').val();
-    if(roadId=="" || date=="" || time==""){
+    if (roadId == "" || date == "" || time == "") {
         alert('모든 값을 채워주세요');
         return;
     }
@@ -60,9 +60,9 @@ function ShowRoadInfo(){
     $.ajax({
         type: 'GET',
         url: `/api/road_info/${roadId}/${date}/${time}`,
-        success: function (response){
+        success: function (response) {
             console.log("반응 성공");
-            for(let i=0; i<response.length; i++){
+            for (let i = 0; i < response.length; i++) {
                 let roadInfo = response[i];
                 let tempHtml = AddRoadInfo(roadInfo);
                 $('#roadInfo').append(tempHtml);
@@ -71,12 +71,44 @@ function ShowRoadInfo(){
     })
 }
 
-function AddRoadInfo(roadInfo){
+function AddRoadInfo(roadInfo) {
     return `<div>io type : ${roadInfo.io_type}</div>
             <div>lane num : ${roadInfo.lane_num}</div>
             <div>vol : ${roadInfo.vol}</div>`
 }
 
-function Buon(){
-    alert("도로 정보를 조회합니다");
+function LedInit() {
+
+    $.ajax({
+        type: 'GET',
+        url: '/led/init',
+        success: function (response) {
+            console.log("반응성공")
+            alert(response);
+        }
+    })
+}
+
+function LedOn() {
+    $.ajax({
+        type: 'GET',
+        url: '/led/on',
+        success: function (response) {
+            alert(response);
+        }
+    })
+}
+
+function LedOff() {
+    $.ajax({
+        type: 'GET',
+        url: '/led/off',
+        success: function (response) {
+            alert(response);
+        }
+    })
+}
+
+function Buon() {
+    alert("버튼을 클릭했습니다.");
 }
