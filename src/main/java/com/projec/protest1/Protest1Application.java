@@ -24,7 +24,7 @@ public class Protest1Application {
 
     //api를 받아서 db에 저장하기 위한 부분
 
-    @Bean
+/*    @Bean
     public CommandLineRunner demo(RoadRepository repository) {
         return (args) -> {
 
@@ -84,5 +84,7 @@ public class Protest1Application {
             }
         };
     }
+
+ */
 
 }
