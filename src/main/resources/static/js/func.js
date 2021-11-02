@@ -2,6 +2,8 @@ var imageNr = 0; // Serial number of current image
 var finished = new Array(); // References to img objects which have finished downloading
 var paused = false;
 
+var state = "usual";
+
 function createImageLayer() {
     var img = new Image();
     img.style.position = "absolute";
@@ -77,18 +79,6 @@ function AddRoadInfo(roadInfo) {
             <div>vol : ${roadInfo.vol}</div>`
 }
 
-function LedInit() {
-
-    $.ajax({
-        type: 'GET',
-        url: '/led/init',
-        success: function (response) {
-            console.log("반응성공")
-            alert(response);
-        }
-    })
-}
-
 function LedOn() {
     $.ajax({
         type: 'GET',
@@ -107,8 +97,4 @@ function LedOff() {
             alert(response);
         }
     })
-}
-
-function Buon() {
-    alert("버튼을 클릭했습니다.");
 }

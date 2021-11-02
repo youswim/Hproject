@@ -1,10 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Light</title>
+    <script src="../js/func.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
-<body>
-<input type="button" value="신호등 조절" onclick="location.href='/a/light'">
+
+<body onload="createImageLayer()">
+
+<div id="webcam">
+    <noscript>
+        <img src="http://192.168.55.2:8091/?action=snapshot"/>
+    </noscript>
+</div>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<input type="button" value="Light 1 ON" onclick="LedOn()">
+<input type="button" value="Light 2 ON" onclick="LedOff()">
 </body>
+
 </html>
