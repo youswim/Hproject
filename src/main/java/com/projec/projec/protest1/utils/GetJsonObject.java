@@ -33,7 +33,7 @@ public class GetJsonObject {
         String xmlString = responseEntity.getBody();
         //api에서 받아온 xml을 string으로 변환한다.
 
-        //System.out.println(XML.toJSONObject(xmlString));
+        System.out.println(XML.toJSONObject(xmlString));
         return XML.toJSONObject(xmlString);
         //xml을 JSONObject 로 변환해서 리턴한다.
 
