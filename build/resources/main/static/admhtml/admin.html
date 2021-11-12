@@ -1,10 +1,73 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>교통정보 확인 :: 관리자 페이지</title>
+    <script src="../js/func.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="../mdb/css/mdb.min.css"/>
+        <style>
+            .outer {
+            display: flex;
+            align-items: center;
+
+            justify-content: center;
+
+            height:100vh;
+            margin: 0;
+            text-align: center;
+
+            }
+            body{
+                margin: 0;
+                background-image: url(../img/backimg.jpg);
+                background-position-x: center;
+                background-repeat: no-repeat;
+                background-size: 70% 100%;
+            }
+            .content{
+            background: #ffead8;
+            /* background: radial-gradient(circle at top left, transparent 15px, #ffead8 0) top left,
+                radial-gradient(circle at top right, transparent 15px, #ffead8 0)top right,
+                radial-gradient(circle at bottom right, transparent 15px, #ffead8 0) bottom right,
+                radial-gradient(circle at bottom left, transparent 15px, #ffead8 0) bottom left; */
+                border-radius: 2em;
+            background-size: 50% 50%;
+            width: 40%;
+            background-repeat: no-repeat;
+            text-align: center;
+
+            }
+            #webcam{
+                margin: 3em;
+                background-color: black;
+            }
+
+            span{
+                font-size: 19pt;
+                font-weight: bold;
+            }
+        </style>
 </head>
-<body>
-<input type="button" value="신호등 조절" onclick="location.href='/a/light'">
+
+<body onload="adm_fun()">
+    <div class="outer">
+        <div class="content">
+            <div id="webcam">
+                    <img src="http://192.168.55.2:8091/?action=snapshot"/>
+            </div>
+            <div id="state" >
+
+
+            </div>
+
+            <input type="button" class="btn btn-primary btn-rounded" value="Light 1 ON" onclick="led1_ON()">
+            <input type="button" class="btn btn-primary btn-rounded" value="Light 2 ON" onclick="led2_ON()">
+        </div>
+
+    </div>
+
 </body>
+
 </html>

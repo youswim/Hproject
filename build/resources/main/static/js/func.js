@@ -2,6 +2,38 @@ var imageNr = 0; // Serial number of current image
 var finished = new Array(); // References to img objects which have finished downloading
 var paused = false;
 
+var state = "usual";
+
+
+function adm_fun(){
+    check_state();
+    createImageLayer();
+}
+
+function check_state(){
+    console.log("chect_state 실행!!");
+    const timer = setInterval(function(){
+        $.ajax({
+            type: 'GET',
+            url: '/state/',
+            success: function (response) {
+                if (state == response[0])
+                    return;
+                console.log(response.state)
+                state = response.state;
+                let tempHtml = Addstate(state);
+                $('#state *').remove()
+                $('#state').append(tempHtml)//append(tempHtml);
+            }
+        })
+    }, 500);
+}
+
+
+function Addstate(state){
+    return `<div>${state}</div>`
+}
+
 function createImageLayer() {
     var img = new Image();
     img.style.position = "absolute";
@@ -10,6 +42,9 @@ function createImageLayer() {
     img.onclick = imageOnclick;
     img.src = "http://192.168.55.2:8091/?action=snapshot&n=" + (++imageNr);
     var webcam = document.getElementById("webcam");
+    img.width = webcam.offsetWidth;
+    //$('#imag *').remove();
+    //$('#imag').append(webcam);
     webcam.insertBefore(img, webcam.firstChild);
 }
 
@@ -62,9 +97,11 @@ function ShowRoadInfo() {
         url: `/api/road_info/${roadId}/${date}/${time}`,
         success: function (response) {
             console.log("반응 성공");
+            $('#roadInfo *').remove();
             for (let i = 0; i < response.length; i++) {
                 let roadInfo = response[i];
                 let tempHtml = AddRoadInfo(roadInfo);
+
                 $('#roadInfo').append(tempHtml);
             }
         }
@@ -77,38 +114,22 @@ function AddRoadInfo(roadInfo) {
             <div>vol : ${roadInfo.vol}</div>`
 }
 
-function LedInit() {
-
+function led1_ON() {
     $.ajax({
         type: 'GET',
-        url: '/led/init',
+        url: '/led1/on',
         success: function (response) {
-            console.log("반응성공")
-            alert(response);
+            console.log(response);
         }
     })
 }
 
-function LedOn() {
+function led2_ON() {
     $.ajax({
         type: 'GET',
-        url: '/led/on',
+        url: '/led2/on',
         success: function (response) {
-            alert(response);
+            console.log(response);
         }
     })
-}
-
-function LedOff() {
-    $.ajax({
-        type: 'GET',
-        url: '/led/off',
-        success: function (response) {
-            alert(response);
-        }
-    })
-}
-
-function Buon() {
-    alert("버튼을 클릭했습니다.");
 }

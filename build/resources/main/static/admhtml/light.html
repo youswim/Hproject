@@ -8,10 +8,16 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 
-<body>
-<input type="button" value="Init" onclick="LedInit()">
-<input type="button" value="On" onclick="LedOn()">
-<input type="button" value="Off" onclick="LedOff()">
+<body onload="createImageLayer()">
+
+<div id="webcam">
+    <noscript>
+        <img src="http://192.168.55.2:8091/?action=snapshot"/>
+    </noscript>
+</div>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<input type="button" value="Light 1 ON" onclick="LedOn()">
+<input type="button" value="Light 2 ON" onclick="LedOff()">
 </body>
 
 </html>
