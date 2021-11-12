@@ -40,7 +40,10 @@ function createImageLayer() {
     img.style.zIndex = -1;
     img.onload = imageOnload;
     img.onclick = imageOnclick;
+
+
     img.src = "http://192.168.55.2:8091/?action=snapshot&n=" + (++imageNr);
+
     var webcam = document.getElementById("webcam");
     img.width = webcam.offsetWidth;
     //$('#imag *').remove();

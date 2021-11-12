@@ -6,9 +6,9 @@
     <title>교통정보 확인 :: 카메라 조회</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="../js/func.js"></script>
-    <link rel="stylesheet" href="../mdb/css/mdb.min.css"/>
-        <style>
-            .outer {
+    <link rel="stylesheet" href="../css/mdb.min.css"/>
+    <style>
+        .outer {
             display: flex;
             align-items: center;
 
@@ -18,62 +18,60 @@
             margin: 0;
             text-align: center;
 
-            }
-            body{
-                margin: 0;
-                background-image: url(../img/backimg.jpg);
-                background-position-x: center;
-                background-repeat: no-repeat;
-                background-size: 70% 100%;
-            }
-            .content{
+        }
+        body{
+            margin: 0;
+            background-image: url(../img/backimg.jpg);
+            background-position-x: center;
+            background-repeat: no-repeat;
+            background-size: 70% 100%;
+        }
+        .content{
             background: #ffead8;
             /* background: radial-gradient(circle at top left, transparent 15px, #ffead8 0) top left,
                 radial-gradient(circle at top right, transparent 15px, #ffead8 0)top right,
                 radial-gradient(circle at bottom right, transparent 15px, #ffead8 0) bottom right,
                 radial-gradient(circle at bottom left, transparent 15px, #ffead8 0) bottom left; */
-                border-radius: 2em;
+            border-radius: 2em;
             background-size: 50% 50%;
             width: 40%;
             background-repeat: no-repeat;
             text-align: center;
-            }
-            #webcam{
-                background-color: black;
-            }
-            img{
-                width: inherit;
-                max-width: 100%;
-                height: auto;
-            }
-            span{
-                font-size: 19pt;
-                font-weight: bold;
-            }
-        </style>
+        }
+        #webcam{
+            background-color: black;
+
+        }
+        img{
+        }
+        span{
+            font-size: 19pt;
+            font-weight: bold;
+        }
+    </style>
 </head>
 
 <!-- <body onload="createImageLayer()"> -->
 <body onload="createImageLayer()">
 
-    <div class="outer">
-        <div class="content">
-            <div>
-                <span><BR>카메라 정보 조회<BR><BR></span>
-            </div>
-
-            <div id="webcam">
-                <img id="imag" src="http://192.168.55.2:8091/?action=snapshot"/>
-
-
-            </div>
-            <div>
-                <BR><BR><BR>
-            </div>
+<div class="outer">
+    <div class="content">
+        <div>
+            <span><BR>카메라 정보 조회<BR><BR></span>
         </div>
 
+        <div id="webcam">
+            <img src="http://192.168.55.2:8091/?action=snapshot"/>
 
+
+        </div>
+        <div>
+            <BR><BR><BR>
+        </div>
     </div>
+
+
+</div>
 
 
 </body>

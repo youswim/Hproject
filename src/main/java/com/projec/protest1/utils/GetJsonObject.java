@@ -2,8 +2,8 @@ package com.projec.protest1.utils;
 
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.projec.protest1.domain.RoadDto;
-import com.projec.protest1.domain.RoadInfoDto;
+import com.projec.protest1.dto.RoadDto;
+import com.projec.protest1.dto.RoadInfoDto;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.XML;
@@ -81,32 +81,4 @@ public class GetJsonObject {
         return roadInfoDtoList;
     }
 
-//    public static void main(String[] args) throws JsonProcessingException {
-//
-//        GetJsonObject getJsonObject = new GetJsonObject();
-//        JSONObject jsonObject = getJsonObject.getJsonObject();
-//        System.out.println(getJsonObject.formJsonToItems(jsonObject));
-//
-//        long time = System.currentTimeMillis() + 43200000;
-//        System.out.println(time);
-//        SimpleDateFormat simpl = new SimpleDateFormat("yyyy년 MM월 dd일 aa hh시 mm분 ss초");
-//        String s = simpl.format(time);
-//
-//        System.out.println(s);
-//
-//        Date now = new Date();
-//        Calendar cal = Calendar.getInstance();
-//        System.out.println(cal);
-//
-//        int year = cal.get(Calendar.YEAR);
-//        int month = cal.get(Calendar.MONTH) + 1;
-//        int day = cal.get(Calendar.DAY_OF_MONTH);
-//        int hour = cal.get(Calendar.HOUR_OF_DAY);
-//        int min = cal.get(Calendar.MINUTE);
-//        int sec = cal.get(Calendar.SECOND);
-//        System.out.println("현재 시각은 " + year + "년도 " + month + "월 " + day + "일 " + hour + "시 " + min + "분 " + sec + "초입니다.");
-//
-//
-//    }
-//
 }

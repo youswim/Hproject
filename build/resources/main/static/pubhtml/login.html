@@ -1,34 +1,73 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport"
-        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
-  <link rel="stylesheet" type="text/css" href="/css/style.css">
+  <script src="../js/func.js"></script>
+  <link rel="stylesheet" href="../css/mdb.min.css"/>
+  <style>
+    .outer {
+      display: flex;
+      align-items: center;
+
+      justify-content: center;
+
+      height:100vh;
+      margin: 0;
+
+    }
+    #login-form {
+
+      padding: 2em;
+      background: #ffead8;
+      /* background: radial-gradient(circle at top left, transparent 15px, #ffead8 0) top left,
+          radial-gradient(circle at top right, transparent 15px, #ffead8 0)top right,
+          radial-gradient(circle at bottom right, transparent 15px, #ffead8 0) bottom right,
+          radial-gradient(circle at bottom left, transparent 15px, #ffead8 0) bottom left; */
+      border-radius: 2em;
+      background-size: 50% 50%;
+      width: 40%;
+      height: fit-content;
+      background-repeat: no-repeat;
+      text-align: center;
+
+    }
+    body{
+      margin: 0;
+      background-image: url(../img/backimg.jpg);
+      background-position-x: center;
+      background-repeat: no-repeat;
+      background-size: 70% 100%;
+    }
+    #home{
+      margin-top: 2em;
+      margin-left: 4em;
+    }
+    input[type="text"],input[type="password"]{
+      border-radius: 2em;
+      height: 2.5em;
+      text-align: center;
+    }
+    #login-id-submit{
+      background-color: #47fcaa;
+    }
+  </style>
   <meta charset="UTF-8">
   <title>로그인 페이지</title>
 </head>
 <body>
-<div id="login-form">
-  <div id="login-title">Log into Select Shop</div>
-  <button id="login-kakao-btn"
-          onclick="location.href='https://kauth.kakao.com/oauth/authorize?client_id=&redirect_uri=http://localhost:8080/user/kakao/callback&response_type=code'">
-    카카오로 로그인하기
-  </button>
-  <button id="login-id-btn" onclick="location.href='/user/signup'">
-    회원 가입하기
-  </button>
-  <div th:if="${loginError}" class="alert alert-danger" role="alert">로그인에 실패하였습니다.</div>
-  <form action="/user/login" method="post">
-    <div class="login-id-label">아이디</div>
-    <input type="text" name="username" class="login-input-box">
-    <div class="login-id-label">비밀번호</div>
-    <input type="password" name="password" class="login-input-box">
-    <button id="login-id-submit">로그인</button>
-  </form>
+<div class="outer">
+
+  <div id="login-form">
+    <form action="/user/login" method="post">
+
+      <input type="text" name="username" class="login-input-box" placeholder="아이디"><br>
+      <input type="password" name="password" class="login-input-box" placeholder="비밀번호"><br>
+      <button id="login-id-submit" class="btn btn-rounded">로그인</button>
+    </form>
+  </div>
+
+
 </div>
+
 </body>
 </html>

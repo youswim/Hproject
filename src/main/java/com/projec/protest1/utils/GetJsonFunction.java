@@ -2,8 +2,8 @@ package com.projec.protest1.utils;
 
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.projec.protest1.domain.RoadDto;
-import com.projec.protest1.domain.RoadInfoDto;
+import com.projec.protest1.dto.RoadDto;
+import com.projec.protest1.dto.RoadInfoDto;
 
 import java.util.List;
 

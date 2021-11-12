@@ -1,9 +1,9 @@
 //package com.projec.protest1.utils;
 //
 //import com.fasterxml.jackson.core.JsonProcessingException;
-//import com.projec.protest1.domain.RoadAllDto;
-//import com.projec.protest1.domain.RoadDto;
-//import com.projec.protest1.domain.RoadInfoDto;
+//import com.projec.protest1.dto.RoadAllDto;
+//import com.projec.protest1.dto.RoadDto;
+//import com.projec.protest1.dto.RoadInfoDto;
 //import com.projec.protest1.domain.RoadRepository;
 //import com.projec.protest1.utils.GetJsonFunction;
 //import lombok.NoArgsConstructor;

@@ -25,10 +25,6 @@ public class ViewController {
         return "/pubhtml/camera.html";
     }
 
-    @GetMapping("/a/light")
-    public String light(){
-        return "/admhtml/light.html";
-    }
 
     @GetMapping("/a/admin")
     public String admin(){

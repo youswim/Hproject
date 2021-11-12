@@ -2,9 +2,9 @@ package com.projec.protest1.contorller;
 
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.projec.protest1.domain.RoadInfoDto;
+import com.projec.protest1.dto.RoadInfoDto;
 import com.projec.protest1.utils.GetJsonObject;
-import com.projec.protest1.domain.RoadDto;
+import com.projec.protest1.dto.RoadDto;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
