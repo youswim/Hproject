@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 
 <head>
     <meta charset="UTF-8">
@@ -34,7 +34,11 @@
                 radial-gradient(circle at bottom left, transparent 15px, #ffead8 0) bottom left; */
             border-radius: 2em;
             background-size: 50% 50%;
-            width: 40%;
+            top: 20%;
+            left: 30%;
+            width: 40% ;
+            height: 60%;
+
             background-repeat: no-repeat;
             text-align: center;
 
@@ -44,7 +48,22 @@
             background-color: black;
         }
 
+        img{
+            position: absolute;
+            /* width: inherit;
+            max-width: 100%;
+            height: auto; */
+            top: 30%;
+            left: 35%;
+            width: 30%;
+            height: auto;
+        }
+
         #state{
+            font-size: 16pt;
+            font-weight: bold;
+        }
+        #ledtime{
             font-size: 16pt;
             font-weight: bold;
         }
@@ -57,21 +76,30 @@
 </head>
 
 <body onload="adm_fun()">
-<div class="outer">
-    <div class="content">
-        <div id="webcam">
-            <img src="http://192.168.55.2:8091/?action=snapshot"/>
+
+    <div class="outer">
+        <div class="content">
+
+                <span><BR>관리자 페이지<BR><BR></span>
+
+            <div id="webcam">
+                <img src="http://192.168.55.2:8091/?action=snapshot"/>
+            </div>
+
+            <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+            <div id="ledtime">
+
+            </div>
+            <div id="state" >
+
+
+            </div>
+
+            <input type="button" class="btn btn-primary btn-rounded" value="Light 1 ON" onclick="led1_ON()">
+            <input type="button" class="btn btn-primary btn-rounded" value="Light 2 ON" onclick="led2_ON()">
         </div>
-        <div id="state" >
 
-
-        </div>
-
-        <input type="button" class="btn btn-primary btn-rounded" value="Light 1 ON" onclick="led1_ON()">
-        <input type="button" class="btn btn-primary btn-rounded" value="Light 2 ON" onclick="led2_ON()">
     </div>
-
-</div>
 
 </body>
 

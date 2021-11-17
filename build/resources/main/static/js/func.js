@@ -2,13 +2,38 @@ var imageNr = 0; // Serial number of current image
 var finished = new Array(); // References to img objects which have finished downloading
 var paused = false;
 
-var state = "usual";
-
+var state = "init";
+var ledtime = "init";
 
 function adm_fun(){
+    check_led_time();
     check_state();
     createImageLayer();
+
 }
+function check_led_time(){
+    const timer = setInterval(function (){
+        $.ajax({
+            type: 'GET',
+            url: '/ledtime/',
+            success: function (response){
+                if(ledtime == response[0])
+                    return;
+                if(ledtime != response.ledTime) {
+                    console.log(response.ledTime)
+                    ledtime = response.ledTime
+                    let tempHtml = Addstate(ledtime);
+                    $('#ledtime *').remove();
+                    $('#ledtime').append(tempHtml);
+                }
+            }
+
+        })
+
+    }, 100)
+}
+
+
 
 function check_state(){
     console.log("chect_state 실행!!");
@@ -19,11 +44,13 @@ function check_state(){
             success: function (response) {
                 if (state == response[0])
                     return;
-                console.log(response.state)
-                state = response.state;
-                let tempHtml = Addstate(state);
-                $('#state *').remove()
-                $('#state').append(tempHtml)//append(tempHtml);
+                if (state != response.state) {
+                    console.log(response.state)
+                    state = response.state;
+                    let tempHtml = Addstate(state);
+                    $('#state *').remove()
+                    $('#state').append(tempHtml)//append(tempHtml);
+                }
             }
         })
     }, 500);
