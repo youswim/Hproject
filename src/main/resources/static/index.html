@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <title>교통정보 확인</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="../js/func.js"></script>
+    <link
+            rel="stylesheet" href="../css/mdb.min.css"/>
+    <style>
+        .outer {
+            display: flex;
+            align-items: center;
+
+            justify-content: center;
+
+            height:100vh;
+            margin: 0;
+
+        }
+        body{
+            margin: 0;
+            background-image: url(../img/backimg.jpg);
+            background-position-x: center;
+            background-repeat: no-repeat;
+            background-size: 70% 100%;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="outer">
+    <div style="text-align: center;">
+        <div><input type="button" class="btn btn-primary btn-rounded" value="도로 조회" onclick="location.href='/p/roads'"></div>
+        <div><input type="button" class="btn btn-primary btn-rounded" value="교통량 조회" onclick="location.href='/p/roadinfo'"></div>
+        <div><input type="button" class="btn btn-primary btn-rounded" value="카메라 조회" onclick="location.href='/p/camera'"></div>
+        <div><input type="button" class="btn btn-secondary btn-rounded" value="관리자용" onclick="location.href='/a/admin'"></div>
+
+    </div>
+</div>
+
+</body>
+
+</html>
