@@ -1,7 +1,7 @@
 package com.projec.protest1.security;
 
-import com.projec.protest1.domain.User;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;

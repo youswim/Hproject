@@ -1,7 +1,7 @@
 package com.projec.protest1.service;
 
 import com.projec.protest1.dto.SignupRequestDto;
-import com.projec.protest1.domain.User;
+import com.projec.protest1.domain.Account;
 import com.projec.protest1.repository.UserRepository;
 import com.projec.protest1.domain.UserRole;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +23,7 @@ public class UserService {
     public void registerUser(SignupRequestDto requestDto) {
         String username = requestDto.getUsername();
 // 회원 ID 중복 확인
-        Optional<User> found = userRepository.findByUsername(username);
+        Optional<Account> found = userRepository.findByUsername(username);
         if (found.isPresent()) {
             throw new IllegalArgumentException("중복된 사용자 ID 가 존재합니다.");
         }
@@ -38,7 +38,7 @@ public class UserService {
             }
             role = UserRole.ADMIN;
         }
-        User user = new User(username, password, email, role);
+        Account user = new Account(username, password, email, role);
         userRepository.save(user);
     }
 }
