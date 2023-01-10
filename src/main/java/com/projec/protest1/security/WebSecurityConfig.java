@@ -22,8 +22,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         String[] openResources = {"/css/**", "/js/**", "/img/**",
                 "/", "/user/**", "/api/**", "/p/**",};
 
+        String[] adminResources = {"/a/**", "/led/**", "/ledtime", "/state"};
+
         http.authorizeRequests()
                 .antMatchers(openResources).permitAll()
+                .antMatchers(adminResources).hasRole("ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
