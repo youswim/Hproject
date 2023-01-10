@@ -2,31 +2,30 @@ package com.projec.protest1.view;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @Controller
-public class ViewController {
-    @GetMapping("/p/")
-    public String index(){
-        return"/pubhtml/index.html";
-    }
+@RequestMapping("/p")
+public class HomeController {
 
-    @GetMapping("/p/roads")
+    @GetMapping("/roads")
     public String roads(){
         return "/pubhtml/roads.html";
     }
 
-    @GetMapping("/p/roadinfo")
+    @GetMapping("/roadinfo")
     public String roadinfo(){
         return "/pubhtml/roadinfo.html";
     }
 
-    @GetMapping("/p/camera")
+    @GetMapping("/camera")
     public String camera(){
         return "/pubhtml/camera.html";
     }
 
 
-    @GetMapping("/a/admin")
+    @GetMapping("/admin")
     public String admin(){
         return "/admhtml/admin.html";
     }
