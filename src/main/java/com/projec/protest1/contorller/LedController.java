@@ -18,12 +18,12 @@ public class LedController {
     // 3. 요청을 전달받은 라즈베리파이는 led 켜짐을 수행하고 문자열을 반환한다.
     // 4. 라즈베리파이가 반환한 문자열을 spring 컨트롤러가 받아서 클라이언트에 전달한다.
 
-    @GetMapping("/led1/on")
+    @GetMapping("/led/1/on")
     public String Led_1_On() {
         return getMessageFromLed(makeUrl("led1"));
     }
 
-    @GetMapping("/led2/on")
+    @GetMapping("/led/2/on")
     public String Led_2_On() {
         return getMessageFromLed(makeUrl("led2"));
     }
