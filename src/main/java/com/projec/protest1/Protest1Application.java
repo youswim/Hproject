@@ -1,6 +1,6 @@
 package com.projec.protest1;
 
-import com.projec.protest1.domain.RoadRepository;
+import com.projec.protest1.repository.RoadRepository;
 import com.projec.protest1.dto.SignupRequestDto;
 import com.projec.protest1.service.UserService;
 import org.springframework.boot.CommandLineRunner;

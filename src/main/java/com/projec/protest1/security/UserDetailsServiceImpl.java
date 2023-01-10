@@ -1,7 +1,7 @@
 package com.projec.protest1.security;
 
 import com.projec.protest1.domain.User;
-import com.projec.protest1.domain.UserRepository;
+import com.projec.protest1.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

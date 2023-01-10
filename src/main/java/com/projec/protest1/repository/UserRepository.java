@@ -1,5 +1,6 @@
-package com.projec.protest1.domain;
+package com.projec.protest1.repository;
 
+import com.projec.protest1.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

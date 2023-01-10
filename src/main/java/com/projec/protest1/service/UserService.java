@@ -2,7 +2,7 @@ package com.projec.protest1.service;
 
 import com.projec.protest1.dto.SignupRequestDto;
 import com.projec.protest1.domain.User;
-import com.projec.protest1.domain.UserRepository;
+import com.projec.protest1.repository.UserRepository;
 import com.projec.protest1.domain.UserRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;

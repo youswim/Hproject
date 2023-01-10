@@ -4,7 +4,7 @@
 //import com.projec.protest1.dto.RoadAllDto;
 //import com.projec.protest1.dto.RoadDto;
 //import com.projec.protest1.dto.RoadInfoDto;
-//import com.projec.protest1.domain.RoadRepository;
+//import com.projec.protest1.repository.RoadRepository;
 //import com.projec.protest1.utils.GetJsonFunction;
 //import lombok.NoArgsConstructor;
 //import lombok.RequiredArgsConstructor;
