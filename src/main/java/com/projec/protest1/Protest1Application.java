@@ -25,6 +25,8 @@ public class Protest1Application {
             signupRequestDto.setUsername("111");
             signupRequestDto.setPassword("111");
             signupRequestDto.setEmail("111@naver.com");
+            signupRequestDto.setAdmin(true);
+            signupRequestDto.setAdminToken("AAABnv/xRVklrnYxKZ0aHgTBcXukeZygoC");
 
             userService.registerUser(signupRequestDto);
 
