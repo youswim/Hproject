@@ -1,7 +1,5 @@
 package com.projec.protest1.contorller;
 
-
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.projec.protest1.dto.RoadInfoDto;
 import com.projec.protest1.utils.GetJsonObject;
 import com.projec.protest1.dto.RoadDto;
@@ -10,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-
 @RestController
 public class RoadController {
     GetJsonObject getJsonObject = new GetJsonObject();
@@ -18,20 +15,17 @@ public class RoadController {
 
     // https://data.seoul.go.kr/dataList/OA-13314/A/1/datasetView.do
     @GetMapping("/api/roads")
-    public List<RoadDto> getRoads() throws JsonProcessingException {
+    public List<RoadDto> getRoads() {
         String url = urlMaker.getSpotInfoUrl();
-        return getJsonObject.formJsonToRoadDto(getJsonObject.getJsonObject(url));
+        return getJsonObject.formJsonToRoadDto(url);
     }
 
     // https://data.seoul.go.kr/dataList/OA-13316/A/1/datasetView.do
     @GetMapping("/api/road_info/{rid}/{yyyymmdd}/{time}")
     public List<RoadInfoDto> getRoadInfo(@PathVariable String rid,
                                          @PathVariable int yyyymmdd,
-                                         @PathVariable int time) throws JsonProcessingException {
+                                         @PathVariable int time) {
         String url = urlMaker.getVolInfoUrl(rid, yyyymmdd, time);
-
-        return getJsonObject.fromJsonToRoadInfoDto(getJsonObject.getJsonObject(url));
+        return getJsonObject.fromJsonToRoadInfoDto(url);
     }
-
-
 }
