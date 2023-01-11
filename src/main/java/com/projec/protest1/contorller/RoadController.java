@@ -5,6 +5,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.projec.protest1.dto.RoadInfoDto;
 import com.projec.protest1.utils.GetJsonObject;
 import com.projec.protest1.dto.RoadDto;
+import com.projec.protest1.utils.UrlMaker;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,38 +13,25 @@ import java.util.List;
 
 @RestController
 public class RoadController {
-
     GetJsonObject getJsonObject = new GetJsonObject();
+    UrlMaker urlMaker = new UrlMaker();
 
-
-
-
+    // https://data.seoul.go.kr/dataList/OA-13314/A/1/datasetView.do
     @GetMapping("/api/roads")
     public List<RoadDto> getRoads() throws JsonProcessingException {
-        String key = "7944415075796f75393267765a5967";
-        int start = 1;
-        int end = 169;
-        String str = "SpotInfo";
-        String url = "http://openapi.seoul.go.kr:8088/" + key + "/xml/" + str + "/" + start + "/" + end + "/";
-
-
+        String url = urlMaker.getSpotInfoUrl();
         return getJsonObject.formJsonToRoadDto(getJsonObject.getJsonObject(url));
-        //roadDto 리스트를 클라이언트에 전달
     }
 
+    // https://data.seoul.go.kr/dataList/OA-13316/A/1/datasetView.do
     @GetMapping("/api/road_info/{rid}/{yyyymmdd}/{time}")
     public List<RoadInfoDto> getRoadInfo(@PathVariable String rid,
                                          @PathVariable int yyyymmdd,
                                          @PathVariable int time) throws JsonProcessingException {
-        String key = "7944415075796f75393267765a5967";
-        int start = 1;
-        int end = 10;
-        String str = "VolInfo";
-        String url = "http://openapi.seoul.go.kr:8088/"
-                + key + "/xml/" + str + "/" + start + "/" + end + "/" + rid + "/" + yyyymmdd + "/" + time + "/";
+        String url = urlMaker.getVolInfoUrl(rid, yyyymmdd, time);
 
         return getJsonObject.fromJsonToRoadInfoDto(getJsonObject.getJsonObject(url));
-        //roadInfoDto 리스트를 클라이언트에 전달
-
     }
+
+
 }
