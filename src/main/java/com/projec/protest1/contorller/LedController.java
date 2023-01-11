@@ -45,7 +45,4 @@ public class LedController {
         log.info("status={}, responseMessage={}", status, responseMessage);
         return responseMessage;
     }
-
-
-
 }

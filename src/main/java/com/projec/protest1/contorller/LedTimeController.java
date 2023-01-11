@@ -31,7 +31,4 @@ public class LedTimeController {
         }
         return "success";
     }
-
-
-
 }

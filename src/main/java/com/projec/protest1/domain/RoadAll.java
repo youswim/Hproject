@@ -1,6 +1,5 @@
 package com.projec.protest1.domain;
 
-
 import com.projec.protest1.dto.RoadAllDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
