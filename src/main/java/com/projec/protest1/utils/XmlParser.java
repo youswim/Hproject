@@ -5,29 +5,18 @@ import com.projec.protest1.dto.RoadInfoDto;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.XML;
-import org.springframework.http.*;
-import org.springframework.web.client.RestTemplate;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class GetJsonObject {
+public class XmlParser {
     // 사용하는 공공 교통 API는 XML로 결과를 돌려준다.
     //작업을 편하게 하기 위해서 JSON으로 변환하여 사용
-
-    public String requestXml(String url) {
-        RestTemplate rest = new RestTemplate();
-        HttpHeaders headers = new HttpHeaders();
-        String body = "";
-
-        HttpEntity<String> requestEntity = new HttpEntity<>(body, headers);
-        ResponseEntity<String> responseEntity =
-                rest.exchange(url, HttpMethod.GET, requestEntity, String.class);
-        return responseEntity.getBody();
-    }
+    UrlRequester ur = new UrlRequester();
 
     public List<RoadDto> formJsonToRoadDto(String url) {
 
-        JSONObject jsonObject = XML.toJSONObject(requestXml(url));
+        JSONObject jsonObject = XML.toJSONObject(ur.requestXml(url));
         JSONArray jsonArray = jsonObject.getJSONObject("SpotInfo").getJSONArray("row");
 
         List<RoadDto> roadDtoList = new ArrayList<>();
@@ -40,7 +29,7 @@ public class GetJsonObject {
     }
 
     public List<RoadInfoDto> fromJsonToRoadInfoDto(String url) {
-        JSONObject jsonObject = XML.toJSONObject(requestXml(url));
+        JSONObject jsonObject = XML.toJSONObject(ur.requestXml(url));
         JSONArray jsonArray = jsonObject.getJSONObject("VolInfo").getJSONArray("row");
 
         List<RoadInfoDto> roadInfoDtoList = new ArrayList<>();
