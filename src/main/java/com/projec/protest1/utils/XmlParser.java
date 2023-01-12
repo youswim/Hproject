@@ -13,11 +13,14 @@ public class XmlParser {
     // 사용하는 공공 교통 API는 XML로 결과를 돌려준다.
     //작업을 편하게 하기 위해서 JSON으로 변환하여 사용
     UrlRequester ur = new UrlRequester();
+    String spotInfo = "SpotInfo";
+    String volInfo = "VolInfo";
 
     public List<RoadDto> formJsonToRoadDto(String url) {
 
         JSONObject jsonObject = XML.toJSONObject(ur.requestXml(url));
-        JSONArray jsonArray = jsonObject.getJSONObject("SpotInfo").getJSONArray("row");
+        checkCode(spotInfo, jsonObject);
+        JSONArray jsonArray = jsonObject.getJSONObject(spotInfo).getJSONArray("row");
 
         List<RoadDto> roadDtoList = new ArrayList<>();
 
@@ -30,7 +33,8 @@ public class XmlParser {
 
     public List<RoadInfoDto> fromJsonToRoadInfoDto(String url) {
         JSONObject jsonObject = XML.toJSONObject(ur.requestXml(url));
-        JSONArray jsonArray = jsonObject.getJSONObject("VolInfo").getJSONArray("row");
+        checkCode(volInfo, jsonObject);
+        JSONArray jsonArray = jsonObject.getJSONObject(volInfo).getJSONArray("row");
 
         List<RoadInfoDto> roadInfoDtoList = new ArrayList<>();
 
@@ -39,5 +43,9 @@ public class XmlParser {
             roadInfoDtoList.add(new RoadInfoDto(tempObj));
         }
         return roadInfoDtoList;
+    }
+
+    private void checkCode(String info, JSONObject jsonObject) {
+        System.out.println(jsonObject.getJSONObject(info).getJSONObject("RESULT").get("CODE"));
     }
 }
