@@ -1,7 +1,6 @@
 package com.projec.protest1;
 
 import com.projec.protest1.domain.RoadAll;
-import com.projec.protest1.dto.RoadAllDto;
 import com.projec.protest1.dto.RoadDto;
 import com.projec.protest1.dto.RoadInfoDto;
 import com.projec.protest1.repository.RoadRepository;
@@ -38,7 +37,7 @@ public class Protest1Application {
         XmlParser xmlParser = new XmlParser();
         UrlMaker urlMaker = new UrlMaker();
 
-        List<RoadDto> roads = xmlParser.formJsonToRoadDto(urlMaker.getSpotInfoUrl());
+        List<RoadDto> roads = xmlParser.formXmlToRoadDto(urlMaker.getSpotInfoUrl());
 
         List<RoadInfoDto> roadInfoDtoLIst;
 
@@ -50,7 +49,7 @@ public class Protest1Application {
                     String str_time = String.format("%1$02d", time);
                     //정수형인 tim을 00, 01 의 format으로 맞추기 위한 과정
 
-                    List<RoadInfoDto> roadInfos = xmlParser.fromJsonToRoadInfoDto(
+                    List<RoadInfoDto> roadInfos = xmlParser.fromXmlToRoadInfoDto(
                             urlMaker.getVolInfoUrl(roadId, date, str_time)
                     );
 

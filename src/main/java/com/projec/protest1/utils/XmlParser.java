@@ -16,7 +16,7 @@ public class XmlParser {
     String spotInfo = "SpotInfo";
     String volInfo = "VolInfo";
 
-    public List<RoadDto> formJsonToRoadDto(String url) {
+    public List<RoadDto> formXmlToRoadDto(String url) {
 
         JSONObject jsonObject = XML.toJSONObject(ur.requestXml(url));
         checkCode(spotInfo, jsonObject);
@@ -31,7 +31,7 @@ public class XmlParser {
         return roadDtoList;
     }
 
-    public List<RoadInfoDto> fromJsonToRoadInfoDto(String url) {
+    public List<RoadInfoDto> fromXmlToRoadInfoDto(String url) {
         JSONObject jsonObject = XML.toJSONObject(ur.requestXml(url));
         checkCode(volInfo, jsonObject);
         JSONArray jsonArray = jsonObject.getJSONObject(volInfo).getJSONArray("row");

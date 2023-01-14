@@ -18,7 +18,7 @@ public class RoadController {
     @GetMapping("/api/roads")
     public List<RoadDto> getRoads() {
         String url = urlMaker.getSpotInfoUrl();
-        return xp.formJsonToRoadDto(url);
+        return xp.formXmlToRoadDto(url);
     }
 
     // https://data.seoul.go.kr/dataList/OA-13316/A/1/datasetView.do
@@ -28,6 +28,6 @@ public class RoadController {
                                          @PathVariable String time) {
         String url = urlMaker.getVolInfoUrl(rid, yyyymmdd, time);
         System.out.println("url : " + url);
-        return xp.fromJsonToRoadInfoDto(url);
+        return xp.fromXmlToRoadInfoDto(url);
     }
 }
