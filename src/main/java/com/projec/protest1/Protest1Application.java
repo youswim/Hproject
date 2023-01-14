@@ -18,17 +18,10 @@ public class Protest1Application {
 
     //api를 받아서 db에 저장하기 위한 부분
     @Bean
-    public CommandLineRunner demo(RoadRepository repository, UserService userService) {
+    public CommandLineRunner demo(UserService userService) {
         return (args) -> {
 
-            SignupRequestDto signupRequestDto = new SignupRequestDto();
-            signupRequestDto.setUsername("111");
-            signupRequestDto.setPassword("111");
-            signupRequestDto.setEmail("111@naver.com");
-            signupRequestDto.setAdmin(true);
-            signupRequestDto.setAdminToken("AAABnv/xRVklrnYxKZ0aHgTBcXukeZygoC");
-
-            userService.registerUser(signupRequestDto);
+            signUpMember(userService);
 
 //
 //            GetJsonFunction getJsonFunction = new GetJsonFunction();
@@ -90,6 +83,16 @@ public class Protest1Application {
         };
     }
 
+    private void signUpMember(UserService userService) {
+        SignupRequestDto signupRequestDto = new SignupRequestDto();
+        signupRequestDto.setUsername("111");
+        signupRequestDto.setPassword("111");
+        signupRequestDto.setEmail("111@naver.com");
+        signupRequestDto.setAdmin(true);
+        signupRequestDto.setAdminToken("AAABnv/xRVklrnYxKZ0aHgTBcXukeZygoC");
+
+        userService.registerUser(signupRequestDto);
+    }
 
 
 }
