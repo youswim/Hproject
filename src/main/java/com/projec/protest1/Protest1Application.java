@@ -43,7 +43,7 @@ public class Protest1Application {
         List<RoadInfoDto> roadInfoDtoLIst;
 
         for (RoadDto road : roads) {
-            String road_id = road.getSpot_num();
+            String roadId = road.getSpot_num();
 
             for (int date = 20210808; date < 20210816; date++) {
                 for (int time = 0; time < 24; time++) {
@@ -51,24 +51,19 @@ public class Protest1Application {
                     //정수형인 tim을 00, 01 의 format으로 맞추기 위한 과정
 
                     List<RoadInfoDto> roadInfos = xmlParser.fromJsonToRoadInfoDto(
-                            urlMaker.getVolInfoUrl(road_id, date, str_time)
+                            urlMaker.getVolInfoUrl(roadId, date, str_time)
                     );
 
                     for (RoadInfoDto roadInfo : roadInfos) {
-                        int io_type = roadInfo.getIo_type();
-                        int lane_num = roadInfo.getLane_num();
+                        int ioType = roadInfo.getIo_type();
+                        int laneNum = roadInfo.getLane_num();
                         int vol = roadInfo.getVol();
 
-                        RoadAllDto roadAllDto = new RoadAllDto(road_id, date, time, io_type, lane_num, vol);
-
-                        RoadAll roadAll = new RoadAll(roadAllDto);
+                        RoadAll roadAll = new RoadAll(roadId, date, time, ioType, laneNum, vol);
 
                         roadRepository.save(roadAll);
-                        //데이터를 db에 저장한다.
-
+//                        System.out.println(roadAll);
                     }
-//                    System.out.println("도로 : " + road_id + ", 날짜 : " + date + ",시간 : " + time);
-//                    저장한 데이터를 간략하게 화면에 출력한다.
                 }
             }
             Thread.sleep(10000);

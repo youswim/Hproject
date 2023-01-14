@@ -1,6 +1,5 @@
 package com.projec.protest1.domain;
 
-import com.projec.protest1.dto.RoadAllDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -10,13 +9,13 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Entity
 public class RoadAll {
-    @Id
 
+    @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Column(nullable = false)
-    private String Road_id;
+    private String roadId;
 
     @Column(nullable = false)
     private int date;
@@ -25,22 +24,33 @@ public class RoadAll {
     private int time;
 
     @Column(nullable = false)
-    private int io_type;
+    private int ioType;
 
     @Column(nullable = false)
-    private int lane_num;
+    private int laneNum;
 
     @Column(nullable = false)
     private int vol;
 
-    public RoadAll(RoadAllDto roadAllDto) {
-        this.Road_id = roadAllDto.getRoad_id();
-        this.date = roadAllDto.getDate();
-        this.time = roadAllDto.getTime();
-        this.io_type = roadAllDto.getIo_type();
-        this.lane_num = roadAllDto.getLane_num();
-        this.vol = roadAllDto.getVol();
+    public RoadAll(String road_id, int date, int time, int io_type, int lane_num, int vol) {
+        this.roadId = road_id;
+        this.date = date;
+        this.time = time;
+        this.ioType = io_type;
+        this.laneNum = lane_num;
+        this.vol = vol;
     }
 
-
+    @Override
+    public String toString() {
+        return "RoadAll{" +
+                "id=" + id +
+                ", roadId='" + roadId + '\'' +
+                ", date=" + date +
+                ", time=" + time +
+                ", ioType=" + ioType +
+                ", laneNum=" + laneNum +
+                ", vol=" + vol +
+                '}';
+    }
 }
