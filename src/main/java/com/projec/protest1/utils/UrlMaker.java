@@ -14,7 +14,7 @@ public class UrlMaker {
         return requestUrl.toString();
     }
 
-    public String getVolInfoUrl(String rid, int yyyymmdd, int time) {
+    public String getVolInfoUrl(String rid, int yyyymmdd, String time) {
         int start = 1;
         int end = 10;
         String str = "VolInfo";

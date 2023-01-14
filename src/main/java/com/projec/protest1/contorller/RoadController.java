@@ -25,8 +25,9 @@ public class RoadController {
     @GetMapping("/api/road_info/{rid}/{yyyymmdd}/{time}")
     public List<RoadInfoDto> getRoadInfo(@PathVariable String rid,
                                          @PathVariable int yyyymmdd,
-                                         @PathVariable int time) {
+                                         @PathVariable String time) {
         String url = urlMaker.getVolInfoUrl(rid, yyyymmdd, time);
+        System.out.println("url : " + url);
         return xp.fromJsonToRoadInfoDto(url);
     }
 }
