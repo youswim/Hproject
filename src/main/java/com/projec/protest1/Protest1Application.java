@@ -46,11 +46,8 @@ public class Protest1Application {
 
             for (int date = 20210808; date < 20210816; date++) {
                 for (int time = 0; time < 24; time++) {
-                    String str_time = String.format("%1$02d", time);
-                    //정수형인 tim을 00, 01 의 format으로 맞추기 위한 과정
-
                     List<RoadInfoDto> roadInfos = xmlParser.fromXmlToRoadInfoDto(
-                            urlMaker.getVolInfoUrl(roadId, date, str_time)
+                            urlMaker.getVolInfoUrl(roadId, date, time)
                     );
 
                     for (RoadInfoDto roadInfo : roadInfos) {

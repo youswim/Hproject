@@ -14,13 +14,13 @@ public class UrlMaker {
         return requestUrl.toString();
     }
 
-    public String getVolInfoUrl(String rid, int yyyymmdd, String time) {
+    public String getVolInfoUrl(String rid, Integer yyyymmdd, Integer time) {
         int start = 1;
         int end = 10;
         String str = "VolInfo";
         StringBuilder requestUrl = new StringBuilder()
                 .append(baseUrl).append(str).append("/").append(start).append("/").append(end).append("/")
-                .append(rid).append("/").append(yyyymmdd).append("/").append(time);
+                .append(rid).append("/").append(yyyymmdd).append("/").append(String.format("%02d", time));
         return requestUrl.toString();
     }
 }

@@ -4,6 +4,7 @@ import com.projec.protest1.dto.RoadInfoDto;
 import com.projec.protest1.dto.RoadDto;
 import com.projec.protest1.utils.UrlMaker;
 import com.projec.protest1.utils.XmlParser;
+import com.projec.protest1.validation.RoadInfoSearchDto;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,11 +23,9 @@ public class RoadController {
     }
 
     // https://data.seoul.go.kr/dataList/OA-13316/A/1/datasetView.do
-    @GetMapping("/api/road_info/{rid}/{yyyymmdd}/{time}")
-    public List<RoadInfoDto> getRoadInfo(@PathVariable String rid,
-                                         @PathVariable int yyyymmdd,
-                                         @PathVariable String time) {
-        String url = urlMaker.getVolInfoUrl(rid, yyyymmdd, time);
+    @GetMapping("/api/road_info")
+    public List<RoadInfoDto> getRoadInfo(@ModelAttribute RoadInfoSearchDto roadInfoSearchDto) {
+        String url = urlMaker.getVolInfoUrl(roadInfoSearchDto.getRid(), roadInfoSearchDto.getDate(), roadInfoSearchDto.getTime());
         System.out.println("url : " + url);
         return xp.fromXmlToRoadInfoDto(url);
     }

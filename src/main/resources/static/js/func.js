@@ -124,7 +124,12 @@ function ShowRoadInfo() {
 
     $.ajax({
         type: 'GET',
-        url: `/api/road_info/${roadId}/${date}/${time}`,
+        url: `/api/road_info`,
+        data: {
+            rid: roadId,
+            date: date,
+            time: time
+        },
         success: function (response) {
             console.log("반응 성공");
             $('#road_info_table_tbody *').remove();
