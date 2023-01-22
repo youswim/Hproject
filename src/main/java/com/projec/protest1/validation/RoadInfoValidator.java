@@ -89,7 +89,7 @@ public class RoadInfoValidator implements Validator {
         }
         LocalDate today = LocalDate.now();
         LocalDate inputDate = LocalDate.parse(date);
-        if (today.compareTo(inputDate) == 0 && time < LocalTime.now().getHour()) {
+        if (today.compareTo(inputDate) == 0 && LocalTime.now().getHour() <= time) {
             errors.rejectValue("date", "exceedNowTime");
         }
     }
