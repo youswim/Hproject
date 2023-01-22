@@ -10,7 +10,7 @@ public class RoadInfoSearchDto {
 
     private String rid;
 
-    private Integer date;
+    private String date;
 
     private Integer time;
 

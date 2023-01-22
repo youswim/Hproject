@@ -47,7 +47,7 @@ public class Protest1Application {
             for (int date = 20210808; date < 20210816; date++) {
                 for (int time = 0; time < 24; time++) {
                     List<RoadInfoDto> roadInfos = xmlParser.fromXmlToRoadInfoDto(
-                            urlMaker.getVolInfoUrl(roadId, date, time)
+                            urlMaker.getVolInfoUrl(roadId, Integer.toString(date), time)
                     );
 
                     for (RoadInfoDto roadInfo : roadInfos) {
