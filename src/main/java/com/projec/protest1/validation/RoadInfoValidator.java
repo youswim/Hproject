@@ -81,6 +81,7 @@ public class RoadInfoValidator implements Validator {
     private void validateTime(String date, Integer time, Errors errors) {
         if (time == null) {
             errors.rejectValue("time", "isNull");
+            return;
         }
         if (time < 0 || 24 <= time) {
             errors.rejectValue("time", "exceedMaxTime");
