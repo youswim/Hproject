@@ -36,6 +36,10 @@ public class RoadInfoValidator implements Validator {
     }
 
     private void validateRid(String rid, Map<String, Integer> roadIdMap, Errors errors) {
+        if (rid == null || rid.isBlank()) {
+            errors.rejectValue("rid", "isNull");
+            return;
+        }
         if (!rid.matches("[A-Z]-[0-9]{2}")) { // 도로 id 형식이 맞지 않는 경우
             errors.rejectValue("rid", "formMismatch");
             return;
@@ -44,25 +48,29 @@ public class RoadInfoValidator implements Validator {
         rid = rid.toUpperCase();
 
         String[] splittedRid = rid.split("-");
-        if (roadIdMap.get(splittedRid[0]) == null) { // 만약, 없는 알파벳이라면
-            errors.rejectValue("rid", "noAlphabet");
+        Integer findValue = roadIdMap.get(splittedRid[0]);
+        if (findValue == null) { // 만약, 없는 알파벳이라면
+            errors.rejectValue("rid", "noMatchAlphabet");
             return;
         }
-        if (roadIdMap.get(splittedRid[0]) < Integer.parseInt(splittedRid[1])) { // 알파벳은 있는데 숫자를 넘긴다면
-            errors.rejectValue("rid", "exceedNumber", new Object[]{splittedRid[0], roadIdMap.get(splittedRid[0])}, null);
+        if (findValue < Integer.parseInt(splittedRid[1])) { // 알파벳은 있는데 숫자를 넘긴다면
+            errors.rejectValue("rid", "exceedNumber", new Object[]{splittedRid[0], findValue}, null);
         }
     }
 
     private void validateDate(String date, Errors errors) {
+        if (date == null || date.isBlank()) {
+            errors.rejectValue("date", "isNull");
+            return;
+        }
         try {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
             sdf.setLenient(false);
             sdf.parse(date);
         } catch(ParseException e) {
-            errors.rejectValue("date", "wrongDate");
+            errors.rejectValue("date", "wrongDateForm");
             return;
         }
-
         LocalDate today = LocalDate.now();
         LocalDate inputDate = LocalDate.parse(date);
         if (today.isBefore(inputDate)) {
@@ -71,6 +79,9 @@ public class RoadInfoValidator implements Validator {
     }
 
     private void validateTime(String date, Integer time, Errors errors) {
+        if (time == null) {
+            errors.rejectValue("time", "isNull");
+        }
         if (time < 0 || 24 <= time) {
             errors.rejectValue("time", "exceedMaxTime");
             return;
