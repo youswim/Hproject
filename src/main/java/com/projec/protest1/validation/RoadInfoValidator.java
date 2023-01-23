@@ -77,7 +77,7 @@ public class RoadInfoValidator implements Validator {
             return;
         }
         LocalDate today = LocalDate.now();
-        LocalDate inputDate = LocalDate.parse(date);
+        LocalDate inputDate = LocalDate.parse(changeToLocalDate(date));
         if (today.isBefore(inputDate)) {
             errors.rejectValue("date","exceedDate");
         }
@@ -93,9 +93,14 @@ public class RoadInfoValidator implements Validator {
             return;
         }
         LocalDate today = LocalDate.now();
-        LocalDate inputDate = LocalDate.parse(date);
+        LocalDate inputDate = LocalDate.parse(changeToLocalDate(date));
         if (today.compareTo(inputDate) == 0 && LocalTime.now().getHour() <= time) {
             errors.rejectValue("date", "exceedNowTime");
         }
+    }
+
+    private String changeToLocalDate(String date) {
+        date = date.substring(0, 4) + "-" + date.substring(4, 6) + "-" + date.substring(6, 8);
+        return date;
     }
 }
