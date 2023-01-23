@@ -11,6 +11,18 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class RoadInfoValidator implements Validator {
+
+    Map<String, Integer> roadIdMap;
+
+    public RoadInfoValidator() {
+        roadIdMap = new HashMap<>();
+        roadIdMap.put("A", 24);
+        roadIdMap.put("B", 38);
+        roadIdMap.put("C", 21);
+        roadIdMap.put("D", 46);
+        roadIdMap.put("F", 10);
+    }
+
     @Override
     public boolean supports(Class<?> clazz) {
         return RoadInfoSearchDto.class.isAssignableFrom(clazz);
@@ -23,19 +35,12 @@ public class RoadInfoValidator implements Validator {
         String date = roadInfoSearchDto.getDate();
         Integer time = roadInfoSearchDto.getTime();
 
-        Map<String, Integer> roadIdMap = new HashMap<>();
-        roadIdMap.put("A", 24);
-        roadIdMap.put("B", 38);
-        roadIdMap.put("C", 21);
-        roadIdMap.put("D", 46);
-        roadIdMap.put("F", 10);
-
-        validateRid(rid, roadIdMap, errors);
+        validateRid(rid, errors);
         validateDate(date, errors);
         validateTime(date, time, errors);
     }
 
-    private void validateRid(String rid, Map<String, Integer> roadIdMap, Errors errors) {
+    private void validateRid(String rid, Errors errors) {
         if (rid == null || rid.isBlank()) {
             errors.rejectValue("rid", "isNull");
             return;
