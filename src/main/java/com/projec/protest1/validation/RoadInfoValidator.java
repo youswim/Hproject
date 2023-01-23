@@ -89,7 +89,7 @@ public class RoadInfoValidator implements Validator {
             return;
         }
         if (time < 0 || 24 <= time) {
-            errors.rejectValue("time", "exceedMaxTime");
+            errors.rejectValue("time", "exceedTimeRange");
             return;
         }
         if(!errors.hasFieldErrors("date")) {
