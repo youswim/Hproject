@@ -2,12 +2,16 @@ package com.projec.protest1.validation;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.Errors;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -31,44 +35,23 @@ class RoadInfoValidatorTest {
         assertFalse(errors.hasFieldErrors("rid"));
     }
 
-    @Test
-    public void testValidateRid_nullRid() {
-        roadInfoSearchDto.setRid(null);
+    @ParameterizedTest
+    @MethodSource("provideRidCases")
+    public void variousValidateRidTest(String rid, String errorCode) {
+        roadInfoSearchDto.setRid(rid);
         validator.validate(roadInfoSearchDto, errors);
         assertTrue(errors.hasFieldErrors("rid"));
-        assertEquals("isNull", errors.getFieldError("rid").getCode());
+        assertEquals(errorCode, errors.getFieldError("rid").getCode());
     }
 
-    @Test
-    public void testValidateRid_blankRid() {
-        roadInfoSearchDto.setRid("   ");
-        validator.validate(roadInfoSearchDto, errors);
-        assertTrue(errors.hasFieldErrors("rid"));
-        assertEquals("isNull", errors.getFieldError("rid").getCode());
-    }
-
-    @Test
-    public void testValidateRid_invalidRidFormat() {
-        roadInfoSearchDto.setRid("A12");
-        validator.validate(roadInfoSearchDto, errors);
-        assertTrue(errors.hasFieldErrors("rid"));
-        assertEquals("formMismatch", errors.getFieldError("rid").getCode());
-    }
-
-    @Test
-    public void testValidateRid_invalidRidAlphabet() {
-        roadInfoSearchDto.setRid("Z-12");
-        validator.validate(roadInfoSearchDto, errors);
-        assertTrue(errors.hasFieldErrors("rid"));
-        assertEquals("noMatchAlphabet", errors.getFieldError("rid").getCode());
-    }
-
-    @Test
-    public void testValidateRid_invalidRidNumber() {
-        roadInfoSearchDto.setRid("A-50");
-        validator.validate(roadInfoSearchDto, errors);
-        assertTrue(errors.hasFieldErrors("rid"));
-        assertEquals("exceedNumber", errors.getFieldError("rid").getCode());
+    private static Stream<Arguments> provideRidCases() {
+        return Stream.of(
+                Arguments.of(null, "isNull"),
+                Arguments.of("   ", "isNull"),
+                Arguments.of("A12", "formMismatch"),
+                Arguments.of("Z-12", "noMatchAlphabet"),
+                Arguments.of("A-50", "exceedNumber")
+        );
     }
 
     @Test
@@ -78,35 +61,22 @@ class RoadInfoValidatorTest {
         assertNull(errors.getFieldError("date"));
     }
 
-    @Test
-    public void testValidateDate_nullDate() {
-        roadInfoSearchDto.setDate(null);
+
+    @ParameterizedTest
+    @MethodSource("provideDateCases")
+    public void variousValidateDateTest(String date, String errorCode) {
+        roadInfoSearchDto.setDate(date);
         validator.validate(roadInfoSearchDto, errors);
-        assertEquals("isNull", errors.getFieldError("date").getCode());
+        assertEquals(errorCode, errors.getFieldError("date").getCode());
     }
 
-    @Test
-    public void testValidateDate_blankDate() {
-        roadInfoSearchDto.setDate("   ");
-        validator.validate(roadInfoSearchDto, errors);
-        assertEquals("isNull", errors.getFieldError("date").getCode());
-
-    }
-
-    @Test
-    public void testValidateDate_invalidDateFormat() {
-        roadInfoSearchDto.setDate("2022/12/31");
-        validator.validate(roadInfoSearchDto, errors);
-        assertTrue(errors.hasFieldErrors("date"));
-        assertEquals("wrongDateForm", errors.getFieldError("date").getCode());
-    }
-
-    @Test
-    public void testValidateDate_exceedDate() { // 이거 수정해야 함!
-        roadInfoSearchDto.setDate(getTomorrowDate());
-        validator.validate(roadInfoSearchDto, errors);
-        assertTrue(errors.hasFieldErrors("date"));
-        assertEquals("exceedDate", errors.getFieldError("date").getCode());
+    private static Stream<Arguments> provideDateCases() {
+        return Stream.of(
+                Arguments.of(null, "isNull"),
+                Arguments.of("   ", "isNull"),
+                Arguments.of("2022/12/31", "wrongDateForm"),
+                Arguments.of(getTomorrowDate(), "exceedDate")
+        );
     }
 
     @Test
@@ -117,54 +87,39 @@ class RoadInfoValidatorTest {
         assertFalse(errors.hasFieldErrors("time"));
     }
 
-    @Test
-    public void testValidateDate_nullTime() {
-        roadInfoSearchDto.setDate("20220201");
-        roadInfoSearchDto.setTime(null);
+    @ParameterizedTest
+    @MethodSource("provideTimeCases")
+    public void variousValidateTimeTest(String date, Integer time, String errorCode) {
+        roadInfoSearchDto.setDate(date);
+        roadInfoSearchDto.setTime(time);
         validator.validate(roadInfoSearchDto, errors);
         assertTrue(errors.hasFieldErrors("time"));
-        assertEquals("isNull", errors.getFieldError("time").getCode());
+        assertEquals(errorCode, errors.getFieldError("time").getCode());
     }
 
-    @Test
-    public void testValidateDate_underTime() {
-        roadInfoSearchDto.setDate("20220201");
-        roadInfoSearchDto.setTime(-1);
-        validator.validate(roadInfoSearchDto, errors);
-        assertTrue(errors.hasFieldErrors("time"));
-        assertEquals("exceedTimeRange", errors.getFieldError("time").getCode());
-    }
-    @Test
-    public void testValidateDate_upperTime() {
-        roadInfoSearchDto.setDate("20230201");
-        roadInfoSearchDto.setTime(24);
-        validator.validate(roadInfoSearchDto, errors);
-        assertTrue(errors.hasFieldErrors("time"));
-        assertEquals("exceedTimeRange", errors.getFieldError("time").getCode());
-    }
-    @Test
-    public void testValidateDate_exceedNowTime() {
-        roadInfoSearchDto.setDate(getTodayDate());
-        roadInfoSearchDto.setTime(Integer.parseInt(getNowTime()));
-        validator.validate(roadInfoSearchDto, errors);
-        assertTrue(errors.hasFieldErrors("time"));
-        assertEquals("exceedNowTime", errors.getFieldError("time").getCode());
+    private static Stream<Arguments> provideTimeCases() {
+        return Stream.of(
+                Arguments.of("20220201", null, "isNull"),
+                Arguments.of("20220201", -1, "exceedTimeRange"),
+                Arguments.of("20230201", 24, "exceedTimeRange"),
+                Arguments.of(getTodayDate(), getNowTime(), "exceedNowTime")
+        );
     }
 
-    private String getTomorrowDate() {
+    private static String getTomorrowDate() {
         return LocalDate.now()
                 .plusDays(1)
                 .format(DateTimeFormatter.ofPattern("yyyyMMdd"));
     }
 
-    private String getTodayDate() {
+    private static String getTodayDate() {
         return LocalDate.now()
                 .format(DateTimeFormatter.ofPattern("yyyyMMdd"));
     }
 
-    private String getNowTime() {
-        return LocalDateTime.now()
-                .format(DateTimeFormatter.ofPattern("HH"));
+    private static Integer getNowTime() {
+        return Integer.parseInt(LocalDateTime.now()
+                .format(DateTimeFormatter.ofPattern("HH")));
     }
 
 }
