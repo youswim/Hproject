@@ -6,29 +6,37 @@ import com.projec.protest1.utils.UrlMaker;
 import com.projec.protest1.utils.XmlParser;
 import com.projec.protest1.validation.RoadInfoSearchDto;
 import com.projec.protest1.validation.RoadInfoValidator;
-import lombok.NoArgsConstructor;
+import com.projec.protest1.validation.ValidationResult;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.context.MessageSource;
+import org.springframework.http.HttpStatus;
+import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.Validator;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Locale;
 
-@Controller
+@RestController
 @RequiredArgsConstructor
 public class RoadController {
-
     private final RoadInfoValidator roadInfoValidator;
+    private final MessageSource messageSource;
     UrlMaker urlMaker = new UrlMaker();
     XmlParser xp = new XmlParser();
 
     @InitBinder
     public void init(WebDataBinder dataBinder) {
         dataBinder.addValidators(roadInfoValidator);
+    }
+
+    @ExceptionHandler(BindException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ValidationResult handleBindException(BindException bindException, Locale locale) {
+//        System.out.println("RoadController.handleBindException");
+        return ValidationResult.create(bindException, messageSource, locale);
     }
 
     // https://data.seoul.go.kr/dataList/OA-13314/A/1/datasetView.do
@@ -40,8 +48,10 @@ public class RoadController {
 
     // https://data.seoul.go.kr/dataList/OA-13316/A/1/datasetView.do
     @GetMapping("/api/road_info")
-    public List<RoadInfoDto> getRoadInfo(@Validated @ModelAttribute RoadInfoSearchDto roadInfoSearchDto, BindingResult bindingResult) {
-//        System.out.println(bindingResult);
+    public List<RoadInfoDto> getRoadInfo(@Validated @ModelAttribute RoadInfoSearchDto roadInfoSearchDto, BindingResult bindingResult) throws BindException {
+        if (bindingResult.hasErrors()) {
+            throw new BindException(bindingResult);
+        }
         String url = urlMaker.getVolInfoUrl(roadInfoSearchDto.getRid().toUpperCase(), roadInfoSearchDto.getDate(), roadInfoSearchDto.getTime());
         System.out.println("url : " + url);
         return xp.fromXmlToRoadInfoDto(url);
