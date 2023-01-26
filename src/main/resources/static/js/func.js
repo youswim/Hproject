@@ -114,31 +114,38 @@ function AddRoad(road) {
 }
 
 function ShowRoadInfo() {
-    let roadId = $('#roadId').val();
+    let rid = $('#rid').val();
     let date = $('#date').val();
     let time = $('#time').val();
-    if (roadId == "" || date == "" || time == "") {
+    if (rid == "" || date == "" || time == "") {
         alert('모든 값을 채워주세요');
         return;
     }
+
 
     $.ajax({
         type: 'GET',
         url: `/api/road_info`,
         data: {
-            rid: roadId,
+            rid: rid,
             date: date,
             time: time
         },
         success: function (response) {
-            console.log("반응 성공");
             $('#road_info_table_tbody *').remove();
+            resetErrorMessages();
             for (let i = 0; i < response.length; i++) {
                 let roadInfo = response[i];
                 let tempHtml = AddRoadInfo(roadInfo);
 
                 $('#road_info_table_tbody').append(tempHtml);
             }
+        },
+        error: function (response){
+            resetErrorMessages();
+            let errors = response.responseJSON.errors
+            console.log(errors)
+            addRoadInfoErrors(errors)
         }
     })
 }
@@ -152,6 +159,28 @@ function AddRoadInfo(roadInfo) {
                 <td class="td">${roadInfo.lane_num}</td>
                 <td class="td">${roadInfo.vol}
             </td>`
+}
+
+function addRoadInfoErrors(errors){
+    console.log(errors)
+    for (let i = 0; i < errors.length; i++) {
+        let error = errors[i];
+        let errorElementId = error.field + "-error";
+        let errorElementMessage = error.message;
+        console.log(errorElementId);
+        console.log(errorElementMessage);
+        document.getElementById(errorElementId).innerText = errorElementMessage;
+    }
+}
+
+function resetErrorMessages(){
+    let errorClassElements = document.getElementsByClassName("error");
+    console.log(errorClassElements)
+    for (let i = 0; i < errorClassElements.length; i++) {
+        console.log("hello")
+        console.log(errorClassElements.item(i).id);
+        document.getElementById(errorClassElements.item(i).id).innerHTML="";
+    }
 }
 
 function led1_ON() {

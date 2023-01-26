@@ -64,12 +64,15 @@
             padding: 3px 10px;
         }
 
-
-
         #roadId, #date, #time {
             border-radius: 2em;
             height: 2.5em;
             text-align: center;
+        }
+
+        .error {
+            font-size: 10pt;
+            color: red;
         }
     </style>
 </head>
@@ -79,9 +82,16 @@
     <div class="content">
         <div>조회하고자 하는 도로의<br> id, 날짜, 시간을 입력하세요.<br></div>
         <div class="form-outline">
-            <input id="roadId" type="text" placeholder="A-01"><br>
+
+            <input id="rid" type="text" placeholder="A-01"><br>
+            <div class="error" id="rid-error"></div>
+
             <input id="date" type="text" placeholder="20210815"><br>
+            <div class="error" id="date-error"></div>
+
             <input id="time" type="text" placeholder="15"><br>
+            <div class="error" id="time-error"></div>
+
             <input type="button" class="btn btn-info btn-rounded" value="조회" onclick="ShowRoadInfo()">
         </div>
 
