@@ -1,5 +1,6 @@
 package com.projec.protest1.validation;
 
+import com.projec.protest1.dto.RoadInfoSearchDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

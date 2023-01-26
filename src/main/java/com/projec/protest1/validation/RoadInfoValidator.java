@@ -1,5 +1,6 @@
 package com.projec.protest1.validation;
 
+import com.projec.protest1.dto.RoadInfoSearchDto;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;

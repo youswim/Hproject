@@ -1,4 +1,4 @@
-package com.projec.protest1.validation;
+package com.projec.protest1.dto;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

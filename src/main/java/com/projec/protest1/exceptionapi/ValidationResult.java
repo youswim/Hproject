@@ -1,4 +1,4 @@
-package com.projec.protest1.validation;
+package com.projec.protest1.exceptionapi;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
