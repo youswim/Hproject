@@ -5,60 +5,29 @@ var paused = false;
 var state = "init";
 var ledtime = "init";
 
-function adm_fun(){
-    check_led_time();
-    check_state();
+function adm_fun() {
+    check_light_state()
     createImageLayer();
 
 }
-function check_led_time(){
-    const timer = setInterval(function (){
-        $.ajax({
-            type: 'GET',
-            url: '/ledtime/',
-            success: function (response){
-                if(ledtime == response[0])
-                    return;
-                if(ledtime != response.ledTime) {
-                    console.log(response.ledTime)
-                    ledtime = response.ledTime
-                    let tempHtml = Addstate(ledtime);
-                    $('#ledtime *').remove();
-                    $('#ledtime').append(tempHtml);
+
+function check_light_state() {
+    const timer = setInterval(
+        function () {
+            $.ajax({
+                type: 'GET',
+                url: '/ledtime/',
+                success: function (response) {
+                    const obj = JSON.parse(response)
+                    addState(obj.light_number + "번 신호등, " + obj.time + "초")
                 }
-            }
-
-        })
-
-    }, 100)
+            });
+        }, 100
+    );
 }
 
-
-
-function check_state(){
-    console.log("chect_state 실행!!");
-    const timer = setInterval(function(){
-        $.ajax({
-            type: 'GET',
-            url: '/state/',
-            success: function (response) {
-                if (state == response[0])
-                    return;
-                if (state != response.state) {
-                    console.log(response.state)
-                    state = response.state;
-                    let tempHtml = Addstate(state);
-                    $('#state *').remove()
-                    $('#state').append(tempHtml)//append(tempHtml);
-                }
-            }
-        })
-    }, 500);
-}
-
-
-function Addstate(state){
-    return `<div>${state}</div>`
+function addState(state) {
+    document.getElementById("light-state").innerText = state;
 }
 
 function createImageLayer() {
@@ -141,7 +110,7 @@ function ShowRoadInfo() {
                 $('#road_info_table_tbody').append(tempHtml);
             }
         },
-        error: function (response){
+        error: function (response) {
             resetErrorMessages();
             let errors = response.responseJSON.errors
             console.log(errors)
@@ -161,7 +130,7 @@ function AddRoadInfo(roadInfo) {
             </td>`
 }
 
-function addRoadInfoErrors(errors){
+function addRoadInfoErrors(errors) {
     console.log(errors)
     for (let i = 0; i < errors.length; i++) {
         let error = errors[i];
@@ -173,13 +142,13 @@ function addRoadInfoErrors(errors){
     }
 }
 
-function resetErrorMessages(){
+function resetErrorMessages() {
     let errorClassElements = document.getElementsByClassName("error");
     console.log(errorClassElements)
     for (let i = 0; i < errorClassElements.length; i++) {
         console.log("hello")
         console.log(errorClassElements.item(i).id);
-        document.getElementById(errorClassElements.item(i).id).innerHTML="";
+        document.getElementById(errorClassElements.item(i).id).innerHTML = "";
     }
 }
 
