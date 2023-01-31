@@ -1,6 +1,7 @@
 package com.projec.protest1.dto;
 
 
+import com.projec.protest1.domain.RoadAll;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.json.JSONObject;
@@ -18,7 +19,11 @@ public class RoadInfoDto {
         this.vol = roadInfoJson.getInt("vol");
         //JSONObject를 인자로 받는 생성자.
         //JSONObject의 각 key값을 갖는 정보들을 빼서 저장한다.
-
     }
 
+    public RoadInfoDto(RoadAll roadAll) {
+        this.io_type = roadAll.getIoType();
+        this.lane_num = roadAll.getLaneNum();
+        this.vol = roadAll.getVol();
+    }
 }

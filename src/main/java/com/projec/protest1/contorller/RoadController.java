@@ -22,6 +22,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Locale;
+import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
@@ -64,7 +65,8 @@ public class RoadController {
                 .format(dateTimeFormatter);
 
         if (Integer.parseInt(agoDate) <= Integer.parseInt(roadInfoSearchDto.getDate())) { // 현재가 더 최신인 경우
-            return roadRepository.findRoadEntities(roadInfoSearchDto.getRid(), roadInfoSearchDto.getDate(), roadInfoSearchDto.getTime());
+            return roadRepository.findRoadEntities(roadInfoSearchDto.getRid(), roadInfoSearchDto.getDate(), roadInfoSearchDto.getTime())
+                    .stream().map(RoadInfoDto::new).collect(Collectors.toList());
         }
 
         String url = urlMaker.getVolInfoUrl(roadInfoSearchDto.getRid().toUpperCase(), roadInfoSearchDto.getDate(), roadInfoSearchDto.getTime());
