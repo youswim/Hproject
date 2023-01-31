@@ -19,7 +19,7 @@ public class RoadRepository {
         em.persist(roadAll);
     }
 
-    public List<RoadAll> findRoadEntities(String rid, Integer date, Integer time) {
+    public List<RoadAll> findRoadEntities(String rid, String date, Integer time) {
         return em.createQuery("select roadAll from RoadAll roadAll " +
                         "where roadAll.roadId = :rid " +
                         "and roadAll.date = :date " +

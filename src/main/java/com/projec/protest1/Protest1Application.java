@@ -55,7 +55,7 @@ public class Protest1Application {
                         int laneNum = roadInfo.getLane_num();
                         int vol = roadInfo.getVol();
 
-                        RoadAll roadAll = new RoadAll(roadId, date, time, ioType, laneNum, vol);
+                        RoadAll roadAll = new RoadAll(roadId, "" + date, time, ioType, laneNum, vol);
 
                         roadRepository.save(roadAll);
 //                        System.out.println(roadAll);

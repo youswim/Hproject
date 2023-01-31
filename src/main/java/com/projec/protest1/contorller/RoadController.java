@@ -1,7 +1,9 @@
 package com.projec.protest1.contorller;
 
+import com.projec.protest1.domain.RoadAll;
 import com.projec.protest1.dto.RoadInfoDto;
 import com.projec.protest1.dto.RoadDto;
+import com.projec.protest1.repository.RoadRepository;
 import com.projec.protest1.utils.UrlMaker;
 import com.projec.protest1.utils.XmlParser;
 import com.projec.protest1.dto.RoadInfoSearchDto;
@@ -16,6 +18,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Locale;
 
@@ -24,6 +28,7 @@ import java.util.Locale;
 public class RoadController {
     private final RoadInfoValidator roadInfoValidator;
     private final MessageSource messageSource;
+    private final RoadRepository roadRepository;
     UrlMaker urlMaker = new UrlMaker();
     XmlParser xp = new XmlParser();
 
@@ -52,6 +57,16 @@ public class RoadController {
         if (bindingResult.hasErrors()) {
             throw new BindException(bindingResult);
         }
+
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyyMMdd");
+        String agoDate = LocalDate.now()
+                .minusYears(5)
+                .format(dateTimeFormatter);
+
+        if (Integer.parseInt(agoDate) <= Integer.parseInt(roadInfoSearchDto.getDate())) { // 현재가 더 최신인 경우
+            return roadRepository.findRoadEntities(roadInfoSearchDto.getRid(), roadInfoSearchDto.getDate(), roadInfoSearchDto.getTime());
+        }
+
         String url = urlMaker.getVolInfoUrl(roadInfoSearchDto.getRid().toUpperCase(), roadInfoSearchDto.getDate(), roadInfoSearchDto.getTime());
         System.out.println("url : " + url);
         return xp.fromXmlToRoadInfoDto(url);

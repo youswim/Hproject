@@ -18,7 +18,7 @@ public class RoadAll {
     private String roadId;
 
     @Column(nullable = false)
-    private Integer date;
+    private String date;
 
     @Column(nullable = false)
     private Integer time;
@@ -32,7 +32,7 @@ public class RoadAll {
     @Column
     private Integer vol;
 
-    public RoadAll(String road_id, Integer date, Integer time, Integer io_type, Integer lane_num, Integer vol) {
+    public RoadAll(String road_id, String date, Integer time, Integer io_type, Integer lane_num, Integer vol) {
         this.roadId = road_id;
         this.date = date;
         this.time = time;
