@@ -18,21 +18,21 @@ public class RoadAll {
     private String roadId;
 
     @Column(nullable = false)
-    private int date;
+    private Integer date;
 
     @Column(nullable = false)
-    private int time;
+    private Integer time;
 
-    @Column(nullable = false)
-    private int ioType;
+    @Column
+    private Integer ioType;
 
-    @Column(nullable = false)
-    private int laneNum;
+    @Column
+    private Integer laneNum;
 
-    @Column(nullable = false)
-    private int vol;
+    @Column
+    private Integer vol;
 
-    public RoadAll(String road_id, int date, int time, int io_type, int lane_num, int vol) {
+    public RoadAll(String road_id, Integer date, Integer time, Integer io_type, Integer lane_num, Integer vol) {
         this.roadId = road_id;
         this.date = date;
         this.time = time;
