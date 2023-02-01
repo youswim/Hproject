@@ -27,6 +27,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 @RestController
@@ -78,6 +79,7 @@ public class RoadController {
             List<Object> range = list.range(redisKey, 0, -1); // 레디스에서 먼저 검색
             if (range != null && !range.isEmpty()) { // 자료가 레디스에 들어있다면
                 System.out.println("레디스에서 값 가져옴!!");
+                redisTemplate.expire(redisKey, 5, TimeUnit.SECONDS);
                 return range.stream().map(o -> {
                     try {
                         return mapper.readValue((String) o, RoadInfoDto.class); // 해당 값 리턴
@@ -92,6 +94,7 @@ public class RoadController {
             System.out.println("db에서 값 가져옴!!");
             for (RoadInfoDto dto : result) {
                 list.rightPush(redisKey, mapper.writeValueAsString(dto)); // 레디스에 값 저장
+                redisTemplate.expire(redisKey, 5, TimeUnit.SECONDS);
                 System.out.println("레디스에 값 저장!");
             }
             return result;
