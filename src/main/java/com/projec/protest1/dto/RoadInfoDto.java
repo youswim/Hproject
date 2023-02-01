@@ -26,4 +26,19 @@ public class RoadInfoDto {
         this.lane_num = roadAll.getLaneNum();
         this.vol = roadAll.getVol();
     }
+
+    public RoadInfoDto(int io_type, int lane_num, int vol) {
+        this.io_type = io_type;
+        this.lane_num = lane_num;
+        this.vol = vol;
+    }
+
+    @Override
+    public String toString() {
+        return "RoadInfoDto{" +
+                "io_type=" + io_type +
+                ", lane_num=" + lane_num +
+                ", vol=" + vol +
+                '}';
+    }
 }
