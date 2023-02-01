@@ -1,6 +1,7 @@
 package com.projec.protest1.repository;
 
 import com.projec.protest1.domain.RoadAll;
+import com.projec.protest1.dto.RoadInfoSearchDto;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,14 +20,14 @@ public class RoadRepository {
         em.persist(roadAll);
     }
 
-    public List<RoadAll> findRoadEntities(String rid, String date, Integer time) {
+    public List<RoadAll> findRoadEntities(RoadInfoSearchDto risDto) {
         return em.createQuery("select roadAll from RoadAll roadAll " +
                         "where roadAll.roadId = :rid " +
                         "and roadAll.date = :date " +
                         "and roadAll.time = :time" , RoadAll.class)
-                .setParameter("rid", rid)
-                .setParameter("date", date)
-                .setParameter("time", time)
+                .setParameter("rid", risDto.getRid())
+                .setParameter("date", risDto.getDate())
+                .setParameter("time", risDto.getTime())
                 .getResultList();
     }
 }
