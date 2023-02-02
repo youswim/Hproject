@@ -78,8 +78,7 @@ function ShowRoads() {
 }
 
 function AddRoad(road) {
-    return `<div>${road.spot_nm}</div>
-            <div>${road.spot_num}</div>`
+    return `<div>${road.spot_nm} : ${road.spot_num}</div><br>`
 }
 
 function ShowRoadInfo() {
