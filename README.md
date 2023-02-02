@@ -20,7 +20,7 @@
 - 관리자가 신호등의 신호를 조절하여 긴급차량이 현장에 빠르게 도착할 수 있도록 도움
 
 ## 6. 애플리케이션 구조
-![structure.png](./readme-imgs/structure.png)
+![structure.png](./readme-imgs/structure.JPG)
 
 ## 7. 애플리케이션 메인 기능
 
