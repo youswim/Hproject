@@ -20,9 +20,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
         http.headers().frameOptions().disable();
         String[] openResources = {"/css/**", "/js/**", "/img/**",
-                "/", "/user/**", "/api/**", "/p/**",};
+                "/", "/user/**", "/api/**", "/p/**"};
 
-        String[] adminResources = {"/a/**", "/led/**", "/ledtime", "/state"};
+        String[] adminResources = {"/a/**", "/led/**", "/ledtime", "/state", "/light"};
 
         http.authorizeRequests()
                 .antMatchers(openResources).permitAll()

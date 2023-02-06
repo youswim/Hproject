@@ -27,6 +27,8 @@ dependencies {
     implementation group: 'org.json', name: 'json', version: '20160810'
     // https://mvnrepository.com/artifact/com.mashape.unirest/unirest-java
     implementation 'com.mashape.unirest:unirest-java:1.4.9'
+    // https://mvnrepository.com/artifact/com.rabbitmq/amqp-client
+    implementation 'com.rabbitmq:amqp-client:5.16.0'
     compileOnly 'org.projectlombok:lombok'
     runtimeOnly 'com.h2database:h2'
     runtimeOnly 'mysql:mysql-connector-java'

@@ -5,63 +5,6 @@ var paused = false;
 var state = "init";
 var ledtime = "init";
 
-function adm_fun() {
-    check_light_state()
-    createImageLayer();
-
-}
-
-function check_light_state() {
-    const timer = setInterval(
-        function () {
-            $.ajax({
-                type: 'GET',
-                url: '/ledtime/',
-                success: function (response) {
-                    const obj = JSON.parse(response)
-                    addState(obj.light_number + "번 신호등, " + obj.time + "초")
-                }
-            });
-        }, 100
-    );
-}
-
-function addState(state) {
-    document.getElementById("light-state").innerText = state;
-}
-
-function createImageLayer() {
-    var img = new Image();
-    img.style.position = "absolute";
-    img.style.zIndex = -1;
-    img.onload = imageOnload;
-    img.onclick = imageOnclick;
-
-
-    img.src = "http://192.168.55.2:8091/?action=snapshot&n=" + (++imageNr);
-
-    var webcam = document.getElementById("webcam");
-    img.width = webcam.offsetWidth;
-    //$('#imag *').remove();
-    //$('#imag').append(webcam);
-    webcam.insertBefore(img, webcam.firstChild);
-}
-
-function imageOnload() {
-    this.style.zIndex = imageNr;
-    while (1 < finished.length) {
-        var del = finished.shift();
-        del.parentNode.removeChild(del);
-    }
-    finished.push(this);
-    if (!paused) createImageLayer();
-}
-
-function imageOnclick() {
-    paused = !paused;
-    if (!paused) createImageLayer();
-}
-
 function ShowRoads() {
     $.ajax({
         type: 'GET',
@@ -151,22 +94,77 @@ function resetErrorMessages() {
     }
 }
 
-function led1_ON() {
-    $.ajax({
-        type: 'GET',
-        url: '/led1/on',
-        success: function (response) {
-            console.log(response);
-        }
-    })
+function adm_fun() {
+    check_light_state()
+    createImageLayer();
+    setEvents();
 }
 
-function led2_ON() {
-    $.ajax({
-        type: 'GET',
-        url: '/led2/on',
-        success: function (response) {
-            console.log(response);
+function check_light_state() {
+    const timer = setInterval(
+        function () {
+            $.ajax({
+                type: 'GET',
+                url: '/ledtime/',
+                success: function (response) {
+                    const obj = JSON.parse(response)
+                    addState(obj.light_number + "번 신호등, " + obj.time + "초")
+                }
+            });
+        }, 100
+    );
+}
+
+function addState(state) {
+    document.getElementById("light-state").innerText = state;
+}
+
+function createImageLayer() {
+    var img = new Image();
+    img.style.position = "absolute";
+    img.style.zIndex = -1;
+    img.onload = imageOnload;
+    img.onclick = imageOnclick;
+
+
+    img.src = "http://192.168.55.2:8091/?action=snapshot&n=" + (++imageNr);
+
+    var webcam = document.getElementById("webcam");
+    img.width = webcam.offsetWidth;
+    //$('#imag *').remove();
+    //$('#imag').append(webcam);
+    webcam.insertBefore(img, webcam.firstChild);
+}
+
+function imageOnload() {
+    this.style.zIndex = imageNr;
+    while (1 < finished.length) {
+        var del = finished.shift();
+        del.parentNode.removeChild(del);
+    }
+    finished.push(this);
+    if (!paused) createImageLayer();
+}
+
+function imageOnclick() {
+    paused = !paused;
+    if (!paused) createImageLayer();
+}
+
+function setEvents() {
+
+    let elements = document.getElementsByClassName("btn");
+    for(let i = 0; i<elements.length; i++){
+        elements.item(i).onclick = function (event){
+            let lightNumber = event.target.value;
+            console.log(lightNumber)
+            $.ajax({
+                url: '/light',
+                type: 'POST',
+                data: {
+                    lightNumber: lightNumber
+                }
+            });
         }
-    })
+    }
 }
