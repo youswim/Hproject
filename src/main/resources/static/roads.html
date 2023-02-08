@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>title 교통정보 확인 :: 도로 조회</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="js/func.js"></script>
+
+    <style>
+        .outer {
+            display: flex;
+            align-items: center;
+
+            justify-content: center;
+
+            height: 100vh;
+            margin: 0;
+
+        }
+        .content{
+            background: #ffead8;
+            /* background: radial-gradient(circle at top left, transparent 15px, #ffead8 0) top left,
+                radial-gradient(circle at top right, transparent 15px, #ffead8 0)top right,
+                radial-gradient(circle at bottom right, transparent 15px, #ffead8 0) bottom right,
+                radial-gradient(circle at bottom left, transparent 15px, #ffead8 0) bottom left; */
+            border-radius: 2em;
+            background-size: 50% 50%;
+            width: 30%;
+            max-height: 80%;
+            background-repeat: no-repeat;
+            text-align: center;
+            overflow-x:hidden;
+            overflow-y:auto;
+            font-size: 19pt;
+            font-weight: bold;
+        }
+        #roads{
+            font-size: 16pt;
+        }
+
+
+        body {
+            margin: 0;
+            background-image: url(img/backimg.jpg);
+            background-position-x: center;
+            background-repeat: no-repeat;
+            background-size: 70% 100%;
+        }
+    </style>
+</head>
+
+<body onload="ShowRoads()">
+<div class="outer">
+    <div class="content">조회할 수 있는 도로 목록<br><br>
+        <div id="roads">
+        </div>
+
+    </div>
+    <!--<input type="button" onclick="showRoads()">-->
+
+
+
+</div>
+
+</body>
+
+</html>
