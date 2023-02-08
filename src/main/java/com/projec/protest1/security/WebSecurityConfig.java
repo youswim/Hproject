@@ -19,15 +19,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
         http.headers().frameOptions().disable();
-        String[] openResources = {"/css/**", "/js/**", "/img/**",
-                "/", "/user/**", "/api/**", "/p/**"};
 
-        String[] adminResources = {"/a/**", "/led/**", "/ledtime", "/state", "/light"};
+        String[] adminResources = {"/a/**", "/led-time", "/state", "/light"};
 
         http.authorizeRequests()
-                .antMatchers(openResources).permitAll()
                 .antMatchers(adminResources).hasRole("ADMIN")
-                .anyRequest().authenticated()
+                .anyRequest().permitAll()
                 .and()
                 .formLogin()
                 .loginPage("/user/login")
