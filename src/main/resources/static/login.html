@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <script src="js/func.js"></script>
+  <link rel="stylesheet" href="css/mdb.min.css"/>
+  <style>
+    .outer {
+      display: flex;
+      align-items: center;
+
+      justify-content: center;
+
+      height:100vh;
+      margin: 0;
+
+    }
+    #login-form {
+
+      padding: 2em;
+      background: #ffead8;
+      /* background: radial-gradient(circle at top left, transparent 15px, #ffead8 0) top left,
+          radial-gradient(circle at top right, transparent 15px, #ffead8 0)top right,
+          radial-gradient(circle at bottom right, transparent 15px, #ffead8 0) bottom right,
+          radial-gradient(circle at bottom left, transparent 15px, #ffead8 0) bottom left; */
+      border-radius: 2em;
+      background-size: 50% 50%;
+      width: 20%;
+      min-width: 165px;
+      height: fit-content;
+      background-repeat: no-repeat;
+      text-align: center;
+
+    }
+    body{
+      margin: 0;
+      background-image: url(img/backimg.jpg);
+      background-position-x: center;
+      background-repeat: no-repeat;
+      background-size: 70% 100%;
+    }
+    #home{
+      margin-top: 2em;
+      margin-left: 4em;
+    }
+    input[type="text"],input[type="password"]{
+      border-radius: 2em;
+      height: 2.5em;
+      text-align: center;
+    }
+    #login-id-submit{
+      background-color: #47fcaa;
+    }
+  </style>
+  <meta charset="UTF-8">
+  <title>로그인 페이지</title>
+</head>
+<body>
+<div class="outer">
+
+  <div id="login-form">
+    <form action="/user/login" method="post">
+
+      <input type="text" name="username" class="login-input-box" placeholder="아이디"><br>
+      <input type="password" name="password" class="login-input-box" placeholder="비밀번호"><br>
+      <button id="login-id-submit" class="btn btn-rounded">로그인</button>
+    </form>
+  </div>
+
+
+</div>
+
+</body>
+</html>

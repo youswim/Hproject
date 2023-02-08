@@ -9,6 +9,6 @@ public class HomeController {
 
     @GetMapping("/a/admin")
     public String admin(){
-        return "/admhtml/admin.html";
+        return "admhtml/admin";
     }
 }

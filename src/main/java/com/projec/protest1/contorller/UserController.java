@@ -21,13 +21,13 @@ public class UserController {
     // 회원 로그인 페이지
     @GetMapping("/user/login")
     public String login() {
-        return "/pubhtml/login";
+        return "redirect:/login.html";
     }
 
     @GetMapping("/user/login/error")
     public String loginError(Model model) {
         model.addAttribute("loginError", true);
-        return "/pubhtml/login";
+        return "redirect:/login.html";
     }
 
     // 회원 가입 페이지
