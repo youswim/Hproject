@@ -36,7 +36,7 @@ function ShowRoadInfo() {
 
     $.ajax({
         type: 'GET',
-        url: `/api/road_info`,
+        url: `/api/road-info`,
         data: {
             rid: rid,
             date: date,
@@ -96,7 +96,7 @@ function resetErrorMessages() {
 
 function adm_fun() {
     check_light_state()
-    createImageLayer();
+    // createImageLayer();
     setEvents();
 }
 
@@ -105,7 +105,7 @@ function check_light_state() {
         function () {
             $.ajax({
                 type: 'GET',
-                url: '/ledtime/',
+                url: '/led-time/',
                 success: function (response) {
                     const obj = JSON.parse(response)
                     addState(obj.light_number + "번 신호등, " + obj.time + "초")

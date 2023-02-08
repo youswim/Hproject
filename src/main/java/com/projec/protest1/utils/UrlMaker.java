@@ -9,18 +9,14 @@ public class UrlMaker {
         int start = 1;
         int end = 169;
         String str = "SpotInfo";
-        StringBuilder requestUrl = new StringBuilder()
-                .append(baseUrl).append(str).append("/").append(start).append("/").append(end);
-        return requestUrl.toString();
+        return baseUrl + str + "/" + start + "/" + end;
     }
 
     public String getVolInfoUrl(String rid, String yyyymmdd, Integer time) {
         int start = 1;
         int end = 10;
         String str = "VolInfo";
-        StringBuilder requestUrl = new StringBuilder()
-                .append(baseUrl).append(str).append("/").append(start).append("/").append(end).append("/")
-                .append(rid).append("/").append(yyyymmdd).append("/").append(String.format("%02d", time));
-        return requestUrl.toString();
+        return baseUrl + str + "/" + start + "/" + end + "/" +
+                rid + "/" + yyyymmdd + "/" + String.format("%02d", time);
     }
 }

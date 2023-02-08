@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.projec.protest1.dto.RoadInfoDto;
 import com.projec.protest1.dto.RoadDto;
 import com.projec.protest1.dto.RoadInfoSearchDto;
+import com.projec.protest1.service.RoadService;
 import com.projec.protest1.validation.RoadInfoValidator;
 import com.projec.protest1.exceptionapi.ValidationResult;
 import lombok.RequiredArgsConstructor;
@@ -35,7 +36,6 @@ public class RoadController {
     @ExceptionHandler(BindException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ValidationResult handleBindException(BindException bindException, Locale locale) {
-//        System.out.println("RoadController.handleBindException");
         return ValidationResult.create(bindException, messageSource, locale);
     }
 
@@ -46,7 +46,7 @@ public class RoadController {
     }
 
     // https://data.seoul.go.kr/dataList/OA-13316/A/1/datasetView.do
-    @GetMapping("/api/road_info")
+    @GetMapping("/api/road-info")
     public List<RoadInfoDto> getRoadInfo(@Validated @ModelAttribute RoadInfoSearchDto risDto, BindingResult bindingResult) throws BindException, JsonProcessingException {
         if (bindingResult.hasErrors()) {
             throw new BindException(bindingResult);

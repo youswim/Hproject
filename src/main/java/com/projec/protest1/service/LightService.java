@@ -1,5 +1,7 @@
 package com.projec.protest1.service;
 
+import com.mashape.unirest.http.Unirest;
+import com.mashape.unirest.http.exceptions.UnirestException;
 import org.springframework.stereotype.Service;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
@@ -18,6 +20,8 @@ public class LightService {
     private static final String ID = "admin";
     private static final String PASSWD = "admin";
 
+    static final String LIGHT_STATE_URL = "http://192.168.45.36:18080/ledtime";
+
 
     public void sendMessage(String message) {
         ConnectionFactory factory = initConFactory();
@@ -29,6 +33,11 @@ public class LightService {
         } catch (IOException | TimeoutException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public String requestLedState() throws UnirestException {
+        Unirest.setTimeouts(0, 0);
+        return Unirest.get(LIGHT_STATE_URL).asString().getBody();
     }
 
     private Map<String, Object> makeArguments() {
