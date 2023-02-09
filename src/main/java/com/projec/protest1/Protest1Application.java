@@ -1,20 +1,10 @@
 package com.projec.protest1;
 
-import com.projec.protest1.domain.RoadAll;
-import com.projec.protest1.dto.RoadDto;
-import com.projec.protest1.dto.RoadInfoDto;
-import com.projec.protest1.repository.RoadRepository;
-import com.projec.protest1.dto.SignupRequestDto;
-import com.projec.protest1.service.UserService;
-import com.projec.protest1.utils.UrlMaker;
-import com.projec.protest1.utils.XmlParser;
+import com.projec.protest1.utils.ApplicationSetup;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-
-import java.util.List;
-
 
 @SpringBootApplication
 public class Protest1Application {
@@ -23,61 +13,11 @@ public class Protest1Application {
         SpringApplication.run(Protest1Application.class, args);
     }
 
-    //api를 받아서 db에 저장하기 위한 부분
     @Bean
-    public CommandLineRunner demo(UserService userService, RoadRepository roadRepository) {
+    public CommandLineRunner demo(ApplicationSetup applicationSetup) { // 애플리케이션에 필요한 setpu
         return (args) -> {
-
-            signUpMember(userService);
-            saveInfos(roadRepository);
+            applicationSetup.signUpMember();
+            applicationSetup.saveInfos();
         };
     }
-
-    private void saveInfos(RoadRepository roadRepository) throws InterruptedException {
-        XmlParser xmlParser = new XmlParser();
-        UrlMaker urlMaker = new UrlMaker();
-
-        List<RoadDto> roads = xmlParser.formXmlToRoadDto(urlMaker.getSpotInfoUrl());
-
-        List<RoadInfoDto> roadInfoDtoLIst;
-
-        for (RoadDto road : roads) {
-            String roadId = road.getSpot_num();
-
-            for (int date = 20210808; date < 20210816; date++) {
-                for (int time = 0; time < 24; time++) {
-                    List<RoadInfoDto> roadInfos = xmlParser.fromXmlToRoadInfoDto(
-                            urlMaker.getVolInfoUrl(roadId, Integer.toString(date), time)
-                    );
-
-                    for (RoadInfoDto roadInfo : roadInfos) {
-                        int ioType = roadInfo.getIo_type();
-                        int laneNum = roadInfo.getLane_num();
-                        int vol = roadInfo.getVol();
-
-                        RoadAll roadAll = new RoadAll(roadId, "" + date, time, ioType, laneNum, vol);
-
-                        roadRepository.save(roadAll);
-//                        System.out.println(roadAll);
-                    }
-                }
-            }
-            Thread.sleep(10000);
-            //짧은 시간에 많은 데이터를 요청하면 교통 api에서 오류를 일으킴.
-            //한번 요청하고 10초가량 쉰다.
-        }
-    }
-
-    private void signUpMember(UserService userService) {
-        SignupRequestDto signupRequestDto = new SignupRequestDto();
-        signupRequestDto.setUsername("111");
-        signupRequestDto.setPassword("111");
-        signupRequestDto.setEmail("111@naver.com");
-        signupRequestDto.setAdmin(true);
-        signupRequestDto.setAdminToken("AAABnv/xRVklrnYxKZ0aHgTBcXukeZygoC");
-
-        userService.registerUser(signupRequestDto);
-    }
-
-
 }

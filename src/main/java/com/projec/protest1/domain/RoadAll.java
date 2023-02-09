@@ -32,12 +32,12 @@ public class RoadAll {
     @Column
     private Integer vol;
 
-    public RoadAll(String road_id, String date, Integer time, Integer io_type, Integer lane_num, Integer vol) {
-        this.roadId = road_id;
+    public RoadAll(String roadId, String date, Integer time, Integer ioType, Integer laneNum, Integer vol) {
+        this.roadId = roadId;
         this.date = date;
         this.time = time;
-        this.ioType = io_type;
-        this.laneNum = lane_num;
+        this.ioType = ioType;
+        this.laneNum = laneNum;
         this.vol = vol;
     }
 
