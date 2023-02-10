@@ -30,4 +30,11 @@ public class RoadRepository {
                 .setParameter("time", risDto.getTime())
                 .getResultList();
     }
+
+    @Transactional
+    public void deleteByDate(String date) {
+        em.createQuery("delete from RoadAll ra where ra.date = :date")
+                .setParameter("date", date)
+                .executeUpdate();
+    }
 }
