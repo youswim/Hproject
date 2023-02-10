@@ -14,19 +14,16 @@ import java.util.List;
 public class XmlParser {
     // 사용하는 공공 교통 API는 XML로 결과를 돌려준다.
     //작업을 편하게 하기 위해서 JSON으로 변환하여 사용
-    UrlRequester ur = new UrlRequester();
+    HttpBodyRequester ur = new HttpBodyRequester();
     String spotInfo = "SpotInfo";
     String volInfo = "VolInfo";
 
-    public List<RoadDto> formXmlToRoadDto(String url) {
+    public List<RoadDto> xmlStringToRoadDto(String httpBody) {
+        JSONObject httpBodyJsonObject = XML.toJSONObject(httpBody);
+        checkErrorCode(spotInfo, httpBodyJsonObject);
+        JSONArray jsonArray = httpBodyJsonObject.getJSONObject(spotInfo).getJSONArray("row");
+
         List<RoadDto> roadDtoList = new ArrayList<>();
-        JSONObject jsonObject = XML.toJSONObject(ur.requestXml(url));
-        if (hasErrorCode(url, spotInfo, jsonObject)) {
-            return roadDtoList;
-        }
-        JSONArray jsonArray = jsonObject.getJSONObject(spotInfo).getJSONArray("row");
-
-
         for (int i = 0; i < jsonArray.length(); i++) {
             JSONObject tempObj = jsonArray.getJSONObject(i);
             roadDtoList.add(new RoadDto(tempObj));
@@ -34,14 +31,12 @@ public class XmlParser {
         return roadDtoList;
     }
 
-    public List<RoadInfoDto> fromXmlToRoadInfoDto(String url) {
-        List<RoadInfoDto> roadInfoDtoList = new ArrayList<>();
-        JSONObject jsonObject = XML.toJSONObject(ur.requestXml(url));
-        if (hasErrorCode(url, volInfo, jsonObject)) {
-            return roadInfoDtoList;
-        }
-        JSONArray jsonArray = jsonObject.getJSONObject(volInfo).getJSONArray("row");
+    public List<RoadInfoDto> xmlStringToRoadInfoDto(String httpBody) {
+        JSONObject httpBodyJsonObject = XML.toJSONObject(httpBody);
+        checkErrorCode(volInfo, httpBodyJsonObject);
+        JSONArray jsonArray = httpBodyJsonObject.getJSONObject(volInfo).getJSONArray("row");
 
+        List<RoadInfoDto> roadInfoDtoList = new ArrayList<>();
         for (int i = 0; i < jsonArray.length(); i++) {
             JSONObject tempObj = jsonArray.getJSONObject(i);
             roadInfoDtoList.add(new RoadInfoDto(tempObj));
@@ -49,12 +44,13 @@ public class XmlParser {
         return roadInfoDtoList;
     }
 
-    private boolean hasErrorCode(String url, String info, JSONObject jsonObject) {
-        String code = (String) jsonObject.getJSONObject(info).getJSONObject("RESULT").get("CODE");
+    private void checkErrorCode(String info, JSONObject jsonObject) {
+        JSONObject result = jsonObject.getJSONObject(info).getJSONObject("RESULT");
+        String code = (String) result.get("CODE");
+        String message = (String) result.get("MESSAGE");
         if (code.equals("INFO-000")) {
-            return false;
+            return;
         }
-        log.warn("url:" + url + " " + "jsonObject:" + jsonObject);
-        return true;
+        throw new IllegalStateException(code + ":" + message);
     }
 }

@@ -8,10 +8,8 @@ import com.projec.protest1.dto.RoadInfoDto;
 import com.projec.protest1.dto.RoadInfoSearchDto;
 import com.projec.protest1.repository.RoadRedisRepository;
 import com.projec.protest1.repository.RoadRepository;
-import com.projec.protest1.utils.UrlMaker;
-import com.projec.protest1.utils.XmlParser;
+import com.projec.protest1.utils.ExternalApiRequester;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -25,13 +23,11 @@ public class RoadService {
 
     private final RoadRepository roadRepository;
     private final RoadRedisRepository roadRedisRepository;
-    private final RedisTemplate<String, Object> redisTemplate;
-    private final UrlMaker urlMaker = new UrlMaker();
-    private final XmlParser xp = new XmlParser();
+    private final ExternalApiRequester apiRequester = new ExternalApiRequester();
     private final ObjectMapper mapper = new ObjectMapper();
 
     public List<RoadDto> getRoads() {
-        return xp.formXmlToRoadDto(urlMaker.getSpotInfoUrl());
+        return apiRequester.requestRoadList();
     }
 
     public List<RoadInfoDto> getRoadInfo(RoadInfoSearchDto risDto) throws JsonProcessingException {
@@ -55,10 +51,7 @@ public class RoadService {
             }
             return result;
         }
-
-        String url = urlMaker.getVolInfoUrl(risDto.getRid().toUpperCase(), risDto.getDate(), risDto.getTime());
-        System.out.println("url : " + url);
-        return xp.fromXmlToRoadInfoDto(url);
+        return apiRequester.requestRoadVolInfo(risDto.getRid().toUpperCase(), risDto.getDate(), risDto.getTime());
     }
 
     private String getAgoDate(LocalDate localDate) { // minusYears 만큼 이전의 날짜를 반환함.
