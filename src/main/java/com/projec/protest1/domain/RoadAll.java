@@ -7,6 +7,9 @@ import javax.persistence.*;
 
 @Getter
 @NoArgsConstructor
+@Table(indexes = {
+        @Index(name = "idx__date__road_id__time", columnList = "date, roadId, time")
+})
 @Entity
 public class RoadAll {
 
