@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 
 <head>
 
     <meta charset="UTF-8">
     <title>교통정보 확인</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="js/func.js"></script>
+    <script src="/js/func.js"></script>
     <link
-            rel="stylesheet" href="css/mdb.min.css"/>
+            rel="stylesheet" href="/css/mdb.min.css"/>
     <style>
         .outer {
             display: flex;
@@ -22,7 +22,7 @@
         }
         body{
             margin: 0;
-            background-image: url(img/backimg.jpg);
+            background-image: url(/img/backimg.jpg);
             background-position-x: center;
             background-repeat: no-repeat;
             background-size: 70% 100%;
@@ -37,7 +37,7 @@
         <div><input type="button" class="btn btn-primary btn-rounded" value="도로 조회" onclick="location.href='/roads.html'"></div>
         <div><input type="button" class="btn btn-primary btn-rounded" value="교통량 조회" onclick="location.href='/road-info.html'"></div>
         <div><input type="button" class="btn btn-primary btn-rounded" value="카메라 조회" onclick="location.href='/camera.html'"></div>
-        <div><input type="button" class="btn btn-secondary btn-rounded" value="관리자용" onclick="location.href='/a/admin'"></div>
+        <div sec:authorize="hasRole('ADMIN')"><input type="button" class="btn btn-secondary btn-rounded" value="관리자용" onclick="location.href='/a/admin'"></divsec:authorize>
 
     </div>
 </div>
