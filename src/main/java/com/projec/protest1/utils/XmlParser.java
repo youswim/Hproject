@@ -1,6 +1,6 @@
 package com.projec.protest1.utils;
 
-import com.projec.protest1.dto.RoadSpotInfoDto;
+import com.projec.protest1.domain.RoadSpotInfo;
 import com.projec.protest1.dto.RoadInfoDto;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONArray;
@@ -17,17 +17,17 @@ public class XmlParser {
     String spotInfoType = "SpotInfo";
     String volInfoType = "VolInfo";
 
-    public List<RoadSpotInfoDto> xmlStringToRoadDto(String httpBody) {
+    public List<RoadSpotInfo> xmlStringToRoadDto(String httpBody) {
         JSONObject httpBodyJsonObject = XML.toJSONObject(httpBody);
         checkErrorCode(spotInfoType, httpBodyJsonObject);
         JSONArray jsonArray = httpBodyJsonObject.getJSONObject(spotInfoType).getJSONArray("row");
 
-        List<RoadSpotInfoDto> roadSpotInfoDtoList = new ArrayList<>();
+        List<RoadSpotInfo> roadSpotInfos = new ArrayList<>();
         for (int i = 0; i < jsonArray.length(); i++) {
             JSONObject tempObj = jsonArray.getJSONObject(i);
-            roadSpotInfoDtoList.add(new RoadSpotInfoDto(tempObj));
+            roadSpotInfos.add(new RoadSpotInfo(tempObj.getString("spot_num"), tempObj.getString("spot_nm")));
         }
-        return roadSpotInfoDtoList;
+        return roadSpotInfos;
     }
 
     public List<RoadInfoDto> xmlStringToRoadInfoDto(String httpBody) {

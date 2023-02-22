@@ -1,6 +1,6 @@
 package com.projec.protest1.utils;
 
-import com.projec.protest1.dto.RoadSpotInfoDto;
+import com.projec.protest1.domain.RoadSpotInfo;
 import com.projec.protest1.dto.RoadInfoDto;
 import lombok.extern.slf4j.Slf4j;
 
@@ -13,16 +13,16 @@ public class ExternalApiRequester {
     private final HttpBodyRequester httpBodyRequester = new HttpBodyRequester();
     private final XmlParser xmlParser = new XmlParser();
 
-    public List<RoadSpotInfoDto> requestRoadList() {
-        String roadListUrl = urlMaker.makeRoadListUrl(); // 요청할 url 가져오기
-        String roadListHttpBody = httpBodyRequester.request(roadListUrl); // url에 요청하고 body얻음
-        List<RoadSpotInfoDto> roadSpotInfoDtos = null;
+    public List<RoadSpotInfo> requestRoadSpotInfos() {
+        String roadSpotInfoUrl = urlMaker.makeRoadSpotInfoUrl(); // 요청할 url 가져오기
+        String roadListHttpBody = httpBodyRequester.request(roadSpotInfoUrl); // url에 요청하고 body얻음
+        List<RoadSpotInfo> roadSpotInfos = null;
         try {
-            roadSpotInfoDtos = xmlParser.xmlStringToRoadDto(roadListHttpBody); // 얻은 body를 dtoList로 파싱
+            roadSpotInfos = xmlParser.xmlStringToRoadDto(roadListHttpBody); // 얻은 body를 dtoList로 파싱
         } catch (IllegalStateException e) {
-            log.warn(roadListUrl + " = " + e.getMessage());
+            log.warn(roadSpotInfoUrl + " = " + e.getMessage());
         }
-        return roadSpotInfoDtos;
+        return roadSpotInfos;
     }
 
     public List<RoadInfoDto> requestRoadVolInfo(String rid, String date, Integer time) {

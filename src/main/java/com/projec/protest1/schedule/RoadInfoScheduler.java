@@ -2,10 +2,8 @@ package com.projec.protest1.schedule;
 
 import com.projec.protest1.domain.RoadAll;
 import com.projec.protest1.domain.RoadSpotInfo;
-import com.projec.protest1.dto.RoadSpotInfoDto;
 import com.projec.protest1.dto.RoadInfoDto;
 import com.projec.protest1.repository.RoadRepository;
-import com.projec.protest1.repository.RoadSpotInfoRepository;
 import com.projec.protest1.service.RoadService;
 import com.projec.protest1.utils.ExternalApiRequester;
 import lombok.RequiredArgsConstructor;

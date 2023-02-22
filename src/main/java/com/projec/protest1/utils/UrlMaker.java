@@ -5,7 +5,7 @@ public class UrlMaker {
     String key = "7944415075796f75393267765a5967";
     String baseUrl = openApiUrl + key + "/xml/";
 
-    public String makeRoadListUrl() {
+    public String makeRoadSpotInfoUrl() {
         int start = 1;
         int end = 169;
         String str = "SpotInfo";

@@ -2,7 +2,6 @@ package com.projec.protest1.utils;
 
 import com.projec.protest1.domain.RoadAll;
 import com.projec.protest1.domain.RoadSpotInfo;
-import com.projec.protest1.dto.RoadSpotInfoDto;
 import com.projec.protest1.dto.RoadInfoDto;
 import com.projec.protest1.dto.SignupRequestDto;
 import com.projec.protest1.repository.RoadRepository;
@@ -40,15 +39,15 @@ public class ApplicationSetup {
     public void saveInfos() throws InterruptedException {
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyyMMdd");
 
-        List<RoadSpotInfoDto> roadSpotInfoDtos = apiRequester.requestRoadList();
+        List<RoadSpotInfo> roadSpotInfos = apiRequester.requestRoadSpotInfos();
 
-        for (RoadSpotInfoDto roadSpotInfoDto : roadSpotInfoDtos) {
+        for (RoadSpotInfo roadSpotInfoDto : roadSpotInfos) {
             roadSpotInfoRepository.save(new RoadSpotInfo(roadSpotInfoDto.getRoadId(), roadSpotInfoDto.getRoadName()));
         }
 
         // 오늘 데이터 얻기
         // [00시 ~ 한시간 전] 범위의 데이터 저장
-        for (RoadSpotInfoDto roadSpotInfoDto : roadSpotInfoDtos) {
+        for (RoadSpotInfo roadSpotInfoDto : roadSpotInfos) {
             String roadId = roadSpotInfoDto.getRoadId();
 
             String hh = LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH"));
@@ -63,7 +62,7 @@ public class ApplicationSetup {
 
         // 과거 데이터 얻기
         // [5년전 오늘 ~ 어제] 범위의 데이터 저장
-        for (RoadSpotInfoDto roadSpotInfoDto : roadSpotInfoDtos) {
+        for (RoadSpotInfo roadSpotInfoDto : roadSpotInfos) {
             String roadId = roadSpotInfoDto.getRoadId();
 
             // 전날부터 오년전 오늘까지 데이터 저장하기
