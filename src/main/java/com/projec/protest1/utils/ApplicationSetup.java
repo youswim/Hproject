@@ -1,10 +1,12 @@
 package com.projec.protest1.utils;
 
 import com.projec.protest1.domain.RoadAll;
-import com.projec.protest1.dto.RoadDto;
+import com.projec.protest1.domain.RoadSpotInfo;
+import com.projec.protest1.dto.RoadSpotInfoDto;
 import com.projec.protest1.dto.RoadInfoDto;
 import com.projec.protest1.dto.SignupRequestDto;
 import com.projec.protest1.repository.RoadRepository;
+import com.projec.protest1.repository.RoadSpotInfoRepository;
 import com.projec.protest1.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -20,6 +22,7 @@ public class ApplicationSetup {
 
     private final UserService userService;
     private final RoadRepository roadRepository;
+    private final RoadSpotInfoRepository roadSpotInfoRepository;
 
     private final ExternalApiRequester apiRequester = new ExternalApiRequester();
 
@@ -37,13 +40,17 @@ public class ApplicationSetup {
     public void saveInfos() throws InterruptedException {
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyyMMdd");
 
-        List<RoadDto> roads = apiRequester.requestRoadList();
+        List<RoadSpotInfoDto> roadSpotInfoDtos = apiRequester.requestRoadList();
+
+        for (RoadSpotInfoDto roadSpotInfoDto : roadSpotInfoDtos) {
+            roadSpotInfoRepository.save(new RoadSpotInfo(roadSpotInfoDto.getRoadId(), roadSpotInfoDto.getRoadName()));
+        }
 
         // 오늘 데이터 얻기
         // [00시 ~ 한시간 전] 범위의 데이터 저장
-        for (RoadDto road : roads) {
-            String roadId = road.getSpot_num();
-            
+        for (RoadSpotInfoDto roadSpotInfoDto : roadSpotInfoDtos) {
+            String roadId = roadSpotInfoDto.getRoadId();
+
             String hh = LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH"));
             String nowDate = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
             for (int time = 0; time < Integer.parseInt(hh); time++) {
@@ -56,8 +63,8 @@ public class ApplicationSetup {
 
         // 과거 데이터 얻기
         // [5년전 오늘 ~ 어제] 범위의 데이터 저장
-        for (RoadDto road : roads) {
-            String roadId = road.getSpot_num();
+        for (RoadSpotInfoDto roadSpotInfoDto : roadSpotInfoDtos) {
+            String roadId = roadSpotInfoDto.getRoadId();
 
             // 전날부터 오년전 오늘까지 데이터 저장하기
             LocalDate baseDate = LocalDate.now().minusYears(5).minusDays(1);

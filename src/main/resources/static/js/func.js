@@ -21,7 +21,7 @@ function ShowRoads() {
 }
 
 function AddRoad(road) {
-    return `<div>${road.spot_nm} : ${road.spot_num}</div><br>`
+    return `<div>${road.roadId} : ${road.roadName}</div><br>`
 }
 
 function ShowRoadInfo() {

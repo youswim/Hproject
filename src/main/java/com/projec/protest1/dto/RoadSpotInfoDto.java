@@ -6,14 +6,14 @@ import org.json.JSONObject;
 
 @NoArgsConstructor
 @Getter
-public class RoadDto {
+public class RoadSpotInfoDto {
 
-    private String spot_nm;
-    private String spot_num;
+    private String roadId;
+    private String roadName;
 
-    public RoadDto(JSONObject roadJson) {
-        this.spot_nm = roadJson.getString("spot_nm");
-        this.spot_num = roadJson.getString("spot_num");
+    public RoadSpotInfoDto(JSONObject roadJson) {
+        this.roadId = roadJson.getString("spot_num");
+        this.roadName = roadJson.getString("spot_nm");
         //JSONObject를 인자로 받는 생성자.
         //JSONObject의 각 key값을 갖는 정보들을 빼서 저장한다.
     }

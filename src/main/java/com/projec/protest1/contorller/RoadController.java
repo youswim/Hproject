@@ -1,8 +1,8 @@
 package com.projec.protest1.contorller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.projec.protest1.domain.RoadSpotInfo;
 import com.projec.protest1.dto.RoadInfoDto;
-import com.projec.protest1.dto.RoadDto;
 import com.projec.protest1.dto.RoadInfoSearchDto;
 import com.projec.protest1.service.RoadService;
 import com.projec.protest1.validation.RoadInfoValidator;
@@ -41,8 +41,8 @@ public class RoadController {
 
     // https://data.seoul.go.kr/dataList/OA-13314/A/1/datasetView.do
     @GetMapping("/api/roads")
-    public List<RoadDto> getRoads() {
-        return roadService.getRoads();
+    public List<RoadSpotInfo> findRoadSpotInfos() {
+        return roadService.findRoadSpotInfos();
     }
 
     // https://data.seoul.go.kr/dataList/OA-13316/A/1/datasetView.do

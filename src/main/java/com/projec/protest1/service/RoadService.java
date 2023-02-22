@@ -3,17 +3,19 @@ package com.projec.protest1.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.projec.protest1.dto.RoadDto;
+import com.projec.protest1.domain.RoadSpotInfo;
 import com.projec.protest1.dto.RoadInfoDto;
 import com.projec.protest1.dto.RoadInfoSearchDto;
 import com.projec.protest1.repository.RoadRedisRepository;
 import com.projec.protest1.repository.RoadRepository;
+import com.projec.protest1.repository.RoadSpotInfoRepository;
 import com.projec.protest1.utils.ExternalApiRequester;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,11 +25,14 @@ public class RoadService {
 
     private final RoadRepository roadRepository;
     private final RoadRedisRepository roadRedisRepository;
+    private final RoadSpotInfoRepository roadSpotInfoRepository;
     private final ExternalApiRequester apiRequester = new ExternalApiRequester();
     private final ObjectMapper mapper = new ObjectMapper();
 
-    public List<RoadDto> getRoads() {
-        return apiRequester.requestRoadList();
+    public List<RoadSpotInfo> findRoadSpotInfos() {
+        List<RoadSpotInfo> roadSpotInfos = new ArrayList<>();
+        roadSpotInfoRepository.findAll().forEach(roadSpotInfos::add);
+        return roadSpotInfos;
     }
 
     public List<RoadInfoDto> getRoadInfo(RoadInfoSearchDto risDto) throws JsonProcessingException {
