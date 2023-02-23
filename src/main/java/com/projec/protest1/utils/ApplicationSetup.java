@@ -62,20 +62,7 @@ public class ApplicationSetup {
 
             String hh = LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH"));
             String nowDate = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
-            for (int time = 0; time < Integer.parseInt(hh); time++) {
-                List<RoadInfoDto> roadInfoDtos = null;
-                try {
-                    roadInfoDtos = apiRequester.requestRoadVolInfo(roadId, nowDate, time);
-                } catch (IllegalStateException e) {
-                    log.warn(e.getMessage());
-                }
-                if (roadInfoDtos == null) {
-                    continue;
-                }
-                for (RoadInfoDto roadInfoDto : roadInfoDtos) {
-                    roadRepository.save(new RoadAll(roadId, nowDate, time, roadInfoDto.getIoType(), roadInfoDto.getLaneNum(), roadInfoDto.getVol()));
-                }
-            }
+            saveRoadAll(roadId, nowDate, Integer.parseInt(hh));
         }
 
         // 과거 데이터 얻기
@@ -85,27 +72,31 @@ public class ApplicationSetup {
 
             // 전날부터 오년전 오늘까지 데이터 저장하기
             LocalDate baseDate = LocalDate.now().minusYears(5).minusDays(1);
-            LocalDate idxDate = LocalDate.now().minusDays(1);
+            LocalDate idxDate = LocalDate.now();
 
             while (baseDate.isBefore(idxDate)) {
-                for (int time = 0; time < 24; time++) {
-                    String date = idxDate.format(dateTimeFormatter);
-                    List<RoadInfoDto> roadInfoDtos = null;
-                    try {
-                        roadInfoDtos = apiRequester.requestRoadVolInfo(roadId, date, time);
-                    } catch (IllegalStateException e) {
-                        log.warn(e.getMessage());
-                    }
-                    if (roadInfoDtos == null) {
-                        continue;
-                    }
-                    for (RoadInfoDto roadInfoDto : roadInfoDtos) {
-                        roadRepository.save(new RoadAll(roadId, date, time, roadInfoDto.getIoType(), roadInfoDto.getLaneNum(), roadInfoDto.getVol()));
-                    }
-                }
                 idxDate = idxDate.minusDays(1);
+                String date = idxDate.format(dateTimeFormatter);
+                saveRoadAll(roadId, date, 24);
             }
             Thread.sleep(1000);
+        }
+    }
+
+    private void saveRoadAll(String roadId, String date, int maxHour) {
+        for (int time = 0; time < maxHour; time++) {
+            List<RoadInfoDto> roadInfoDtos = null;
+            try {
+                roadInfoDtos = apiRequester.requestRoadVolInfo(roadId, date, time);
+            } catch (IllegalStateException e) {
+                log.warn(e.getMessage());
+            }
+            if (roadInfoDtos == null) {
+                continue;
+            }
+            for (RoadInfoDto roadInfoDto : roadInfoDtos) {
+                roadRepository.save(new RoadAll(roadId, date, time, roadInfoDto.getIoType(), roadInfoDto.getLaneNum(), roadInfoDto.getVol()));
+            }
         }
     }
 }
