@@ -2,7 +2,6 @@ package com.projec.protest1.utils;
 
 import com.projec.protest1.domain.RoadSpotInfo;
 import com.projec.protest1.dto.RoadInfoDto;
-import lombok.extern.slf4j.Slf4j;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.XML;
@@ -10,16 +9,15 @@ import org.json.XML;
 import java.util.ArrayList;
 import java.util.List;
 
-@Slf4j
 public class XmlParser {
     // 사용하는 공공 교통 API는 XML로 결과를 돌려준다.
     //작업을 편하게 하기 위해서 JSON으로 변환하여 사용
     String spotInfoType = "SpotInfo";
     String volInfoType = "VolInfo";
 
-    public List<RoadSpotInfo> xmlStringToRoadDto(String httpBody) {
+    public List<RoadSpotInfo> xmlStringToRoadDto(String httpBody, String requestUrl) throws IllegalStateException {
         JSONObject httpBodyJsonObject = XML.toJSONObject(httpBody);
-        checkErrorCode(spotInfoType, httpBodyJsonObject);
+        checkErrorCode(spotInfoType, httpBodyJsonObject, requestUrl);
         JSONArray jsonArray = httpBodyJsonObject.getJSONObject(spotInfoType).getJSONArray("row");
 
         List<RoadSpotInfo> roadSpotInfos = new ArrayList<>();
@@ -30,9 +28,9 @@ public class XmlParser {
         return roadSpotInfos;
     }
 
-    public List<RoadInfoDto> xmlStringToRoadInfoDto(String httpBody) {
+    public List<RoadInfoDto> xmlStringToRoadInfoDto(String httpBody, String requestUrl) throws IllegalStateException {
         JSONObject httpBodyJsonObject = XML.toJSONObject(httpBody);
-        checkErrorCode(volInfoType, httpBodyJsonObject);
+        checkErrorCode(volInfoType, httpBodyJsonObject, requestUrl);
         JSONArray jsonArray = httpBodyJsonObject.getJSONObject(volInfoType).getJSONArray("row");
 
         List<RoadInfoDto> roadInfoDtoList = new ArrayList<>();
@@ -43,13 +41,13 @@ public class XmlParser {
         return roadInfoDtoList;
     }
 
-    private void checkErrorCode(String infoType, JSONObject jsonObject) {
+    private void checkErrorCode(String infoType, JSONObject jsonObject, String requestUrl) throws IllegalStateException {
         JSONObject result = jsonObject.getJSONObject(infoType).getJSONObject("RESULT");
         String code = (String) result.get("CODE");
         String message = (String) result.get("MESSAGE");
         if (code.equals("INFO-000")) {
             return;
         }
-        throw new IllegalStateException(code + ":" + message);
+        throw new IllegalStateException(requestUrl + "|" + code + "|" + message);
     }
 }

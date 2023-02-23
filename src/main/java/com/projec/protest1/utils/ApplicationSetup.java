@@ -8,6 +8,7 @@ import com.projec.protest1.repository.RoadRepository;
 import com.projec.protest1.repository.RoadSpotInfoRepository;
 import com.projec.protest1.service.UserService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
@@ -15,6 +16,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class ApplicationSetup {
@@ -39,7 +41,15 @@ public class ApplicationSetup {
     public void saveInfos() throws InterruptedException {
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyyMMdd");
 
-        List<RoadSpotInfo> roadSpotInfos = apiRequester.requestRoadSpotInfos();
+        List<RoadSpotInfo> roadSpotInfos = null;
+        try {
+            roadSpotInfos = apiRequester.requestRoadSpotInfos();
+        } catch (IllegalStateException e) {
+            log.warn(e.getMessage());
+        }
+        if (roadSpotInfos == null) {
+            return;
+        }
 
         for (RoadSpotInfo roadSpotInfoDto : roadSpotInfos) {
             roadSpotInfoRepository.save(new RoadSpotInfo(roadSpotInfoDto.getRoadId(), roadSpotInfoDto.getRoadName()));
@@ -53,7 +63,15 @@ public class ApplicationSetup {
             String hh = LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH"));
             String nowDate = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
             for (int time = 0; time < Integer.parseInt(hh); time++) {
-                List<RoadInfoDto> roadInfoDtos = apiRequester.requestRoadVolInfo(roadId, nowDate, time);
+                List<RoadInfoDto> roadInfoDtos = null;
+                try {
+                    roadInfoDtos = apiRequester.requestRoadVolInfo(roadId, nowDate, time);
+                } catch (IllegalStateException e) {
+                    log.warn(e.getMessage());
+                }
+                if (roadInfoDtos == null) {
+                    continue;
+                }
                 for (RoadInfoDto roadInfoDto : roadInfoDtos) {
                     roadRepository.save(new RoadAll(roadId, nowDate, time, roadInfoDto.getIo_type(), roadInfoDto.getLane_num(), roadInfoDto.getVol()));
                 }
@@ -72,7 +90,15 @@ public class ApplicationSetup {
             while (baseDate.isBefore(idxDate)) {
                 for (int time = 0; time < 24; time++) {
                     String date = idxDate.format(dateTimeFormatter);
-                    List<RoadInfoDto> roadInfoDtos = apiRequester.requestRoadVolInfo(roadId, date, time);
+                    List<RoadInfoDto> roadInfoDtos = null;
+                    try {
+                        roadInfoDtos = apiRequester.requestRoadVolInfo(roadId, date, time);
+                    } catch (IllegalStateException e) {
+                        log.warn(e.getMessage());
+                    }
+                    if (roadInfoDtos == null) {
+                        continue;
+                    }
                     for (RoadInfoDto roadInfoDto : roadInfoDtos) {
                         roadRepository.save(new RoadAll(roadId, date, time, roadInfoDto.getIo_type(), roadInfoDto.getLane_num(), roadInfoDto.getVol()));
                     }
