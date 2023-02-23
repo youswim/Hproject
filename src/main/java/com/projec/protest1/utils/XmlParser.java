@@ -36,7 +36,7 @@ public class XmlParser {
         List<RoadInfoDto> roadInfoDtoList = new ArrayList<>();
         for (int i = 0; i < jsonArray.length(); i++) {
             JSONObject tempObj = jsonArray.getJSONObject(i);
-            roadInfoDtoList.add(new RoadInfoDto(tempObj));
+            roadInfoDtoList.add(new RoadInfoDto(tempObj.getInt("io_type"), tempObj.getInt("lane_num"), tempObj.getInt("vol")));
         }
         return roadInfoDtoList;
     }

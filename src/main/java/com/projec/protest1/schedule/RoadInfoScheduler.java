@@ -41,8 +41,8 @@ public class RoadInfoScheduler {
                         roadSpotInfo.getRoadId(),
                         todayDate,
                         time,
-                        roadInfoDto.getIo_type(),
-                        roadInfoDto.getLane_num(),
+                        roadInfoDto.getIoType(),
+                        roadInfoDto.getLaneNum(),
                         roadInfoDto.getVol());
                 roadRepository.save(roadAll); // 저장
             }

@@ -73,7 +73,7 @@ public class ApplicationSetup {
                     continue;
                 }
                 for (RoadInfoDto roadInfoDto : roadInfoDtos) {
-                    roadRepository.save(new RoadAll(roadId, nowDate, time, roadInfoDto.getIo_type(), roadInfoDto.getLane_num(), roadInfoDto.getVol()));
+                    roadRepository.save(new RoadAll(roadId, nowDate, time, roadInfoDto.getIoType(), roadInfoDto.getLaneNum(), roadInfoDto.getVol()));
                 }
             }
         }
@@ -100,7 +100,7 @@ public class ApplicationSetup {
                         continue;
                     }
                     for (RoadInfoDto roadInfoDto : roadInfoDtos) {
-                        roadRepository.save(new RoadAll(roadId, date, time, roadInfoDto.getIo_type(), roadInfoDto.getLane_num(), roadInfoDto.getVol()));
+                        roadRepository.save(new RoadAll(roadId, date, time, roadInfoDto.getIoType(), roadInfoDto.getLaneNum(), roadInfoDto.getVol()));
                     }
                 }
                 idxDate = idxDate.minusDays(1);

@@ -66,8 +66,8 @@ function AddRoadInfo(roadInfo) {
     //         <div>lane num : ${roadInfo.lane_num}</div>
     //         <div>vol : ${roadInfo.vol}</div>`
     return `<tr>
-                <td class="td">${roadInfo.io_type}</td>
-                <td class="td">${roadInfo.lane_num}</td>
+                <td class="td">${roadInfo.ioType}</td>
+                <td class="td">${roadInfo.laneNum}</td>
                 <td class="td">${roadInfo.vol}
             </td>`
 }
