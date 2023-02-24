@@ -53,10 +53,18 @@ function ShowRoadInfo() {
             }
         },
         error: function (response) {
+            console.log(response.status)
             resetErrorMessages();
-            let errors = response.responseJSON.errors
-            console.log(errors)
-            addRoadInfoErrors(errors)
+            if(response.status == 400){ // 400은 사용자가 잘못된 형식의 form-data 를 보냈을 때.
+                let errors = response.responseJSON.errors
+                console.log(errors)
+                addRoadInfoErrors(errors)
+                return
+            }
+            if(response.status == 404){ // 404는 요청한 데이터가 서버와 외부 API 에 존재하지 않을 때.
+                console.log(response.responseText)
+                document.getElementById("404").innerText = response.responseText;
+            }
         }
     })
 }
@@ -92,6 +100,7 @@ function resetErrorMessages() {
         console.log(errorClassElements.item(i).id);
         document.getElementById(errorClassElements.item(i).id).innerHTML = "";
     }
+    document.getElementById("404").innerText = ""
 }
 
 function adm_fun() {

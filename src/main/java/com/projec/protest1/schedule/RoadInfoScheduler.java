@@ -3,6 +3,7 @@ package com.projec.protest1.schedule;
 import com.projec.protest1.domain.RoadAll;
 import com.projec.protest1.domain.RoadSpotInfo;
 import com.projec.protest1.dto.RoadInfoDto;
+import com.projec.protest1.exception.ApiErrorCodeException;
 import com.projec.protest1.repository.RoadRepository;
 import com.projec.protest1.service.RoadService;
 import com.projec.protest1.utils.ExternalApiRequester;
@@ -22,7 +23,7 @@ public class RoadInfoScheduler {
     private final ExternalApiRequester apiRequester = new ExternalApiRequester();
 
     @Scheduled(cron = "0 10 * * * *") // 외부 api에 늦게 데이터가 업로드 되는 가능성을 예상하여 0초 10분으로 설정
-    public void saveLatestRoadInfo() { // 한시간 전 데이터를 DB에 저장하는 스케줄러
+    public void saveLatestRoadInfo() throws ApiErrorCodeException { // 한시간 전 데이터를 DB에 저장하는 스케줄러
         List<RoadSpotInfo> roadSpotInfos = roadService.findRoadSpotInfos();
 
         LocalDateTime nowDateTime = LocalDateTime.now();
