@@ -11,6 +11,7 @@ import com.projec.protest1.repository.RoadRepository;
 import com.projec.protest1.repository.RoadSpotInfoRepository;
 import com.projec.protest1.utils.ExternalApiRequester;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -19,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class RoadService {
@@ -35,7 +37,7 @@ public class RoadService {
         return roadSpotInfos;
     }
 
-    public List<RoadInfoDto> getRoadInfo(RoadInfoSearchDto risDto) throws JsonProcessingException {
+    public List<RoadInfoDto> getRoadInfo(RoadInfoSearchDto risDto) {
 
         if (isABeforeOrSameB(getAgoDate(LocalDate.now()), risDto.getDate())) { // 5년전보다 입력받은 날짜가 최신이라면
             List<RoadInfoDto> infoFromLocalResult = findInfoFromLocal(risDto);
@@ -46,7 +48,7 @@ public class RoadService {
         return apiRequester.requestRoadVolInfo(risDto.getRid().toUpperCase(), risDto.getDate(), risDto.getTime());
     }
 
-    private List<RoadInfoDto> findInfoFromLocal(RoadInfoSearchDto risDto) throws JsonProcessingException {
+    private List<RoadInfoDto> findInfoFromLocal(RoadInfoSearchDto risDto) {
         List<Object> redisFindResults = roadRedisRepository.findRoadInfoDto(risDto); // 레디스에서 먼저 찾아보기
         if (!redisFindResults.isEmpty()) { // 레디스에 값이 들어있다면,
             return redisFindResults.stream()
@@ -58,8 +60,14 @@ public class RoadService {
                 .map(RoadInfoDto::new)
                 .collect(Collectors.toList()); // db에서 찾아옴
         System.out.println("db에서 값 가져옴!!");
+
         for (RoadInfoDto dto : result) {
-            roadRedisRepository.saveRoadInfoDto(risDto, mapper.writeValueAsString(dto));
+            try {
+                roadRedisRepository.saveRoadInfoDto(risDto, mapper.writeValueAsString(dto));
+            } catch (JsonProcessingException e) {
+                System.out.println("RoadService.findInfoFromLocal");
+                log.warn(e.getMessage());
+            }
             System.out.println("레디스에 값 저장!");
         }
         return result;
