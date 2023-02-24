@@ -2,6 +2,7 @@ package com.projec.protest1.utils;
 
 import com.projec.protest1.domain.RoadSpotInfo;
 import com.projec.protest1.dto.RoadInfoDto;
+import com.projec.protest1.exception.ApiErrorCodeException;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.XML;
@@ -15,7 +16,7 @@ public class XmlParser {
     String spotInfoType = "SpotInfo";
     String volInfoType = "VolInfo";
 
-    public List<RoadSpotInfo> xmlStringToRoadDto(String httpBody, String requestUrl) throws IllegalStateException {
+    public List<RoadSpotInfo> xmlStringToRoadDto(String httpBody, String requestUrl) throws ApiErrorCodeException {
         JSONObject httpBodyJsonObject = XML.toJSONObject(httpBody);
         checkErrorCode(spotInfoType, httpBodyJsonObject, requestUrl);
         JSONArray jsonArray = httpBodyJsonObject.getJSONObject(spotInfoType).getJSONArray("row");
@@ -28,7 +29,7 @@ public class XmlParser {
         return roadSpotInfos;
     }
 
-    public List<RoadInfoDto> xmlStringToRoadInfoDto(String httpBody, String requestUrl) throws IllegalStateException {
+    public List<RoadInfoDto> xmlStringToRoadInfoDto(String httpBody, String requestUrl) throws ApiErrorCodeException {
         JSONObject httpBodyJsonObject = XML.toJSONObject(httpBody);
         checkErrorCode(volInfoType, httpBodyJsonObject, requestUrl);
         JSONArray jsonArray = httpBodyJsonObject.getJSONObject(volInfoType).getJSONArray("row");
@@ -41,13 +42,13 @@ public class XmlParser {
         return roadInfoDtoList;
     }
 
-    private void checkErrorCode(String infoType, JSONObject jsonObject, String requestUrl) throws IllegalStateException {
+    private void checkErrorCode(String infoType, JSONObject jsonObject, String requestUrl) throws ApiErrorCodeException {
         JSONObject result = jsonObject.getJSONObject(infoType).getJSONObject("RESULT");
         String code = (String) result.get("CODE");
         String message = (String) result.get("MESSAGE");
         if (code.equals("INFO-000")) {
             return;
         }
-        throw new IllegalStateException(requestUrl + "|" + code + "|" + message);
+        throw new ApiErrorCodeException(requestUrl + "|" + code + "|" + message);
     }
 }

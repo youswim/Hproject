@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.projec.protest1.domain.RoadSpotInfo;
 import com.projec.protest1.dto.RoadInfoDto;
 import com.projec.protest1.dto.RoadInfoSearchDto;
+import com.projec.protest1.exception.ApiErrorCodeException;
 import com.projec.protest1.repository.RoadRedisRepository;
 import com.projec.protest1.repository.RoadRepository;
 import com.projec.protest1.repository.RoadSpotInfoRepository;
@@ -37,7 +38,7 @@ public class RoadService {
         return roadSpotInfos;
     }
 
-    public List<RoadInfoDto> getRoadInfo(RoadInfoSearchDto risDto) {
+    public List<RoadInfoDto> getRoadInfo(RoadInfoSearchDto risDto) throws ApiErrorCodeException {
 
         if (isABeforeOrSameB(getAgoDate(LocalDate.now()), risDto.getDate())) { // 5년전보다 입력받은 날짜가 최신이라면
             List<RoadInfoDto> infoFromLocalResult = findInfoFromLocal(risDto);

@@ -4,6 +4,7 @@ import com.projec.protest1.domain.RoadAll;
 import com.projec.protest1.domain.RoadSpotInfo;
 import com.projec.protest1.dto.RoadInfoDto;
 import com.projec.protest1.dto.SignupRequestDto;
+import com.projec.protest1.exception.ApiErrorCodeException;
 import com.projec.protest1.repository.RoadRepository;
 import com.projec.protest1.repository.RoadSpotInfoRepository;
 import com.projec.protest1.service.UserService;
@@ -44,7 +45,7 @@ public class ApplicationSetup {
         List<RoadSpotInfo> roadSpotInfos = null;
         try {
             roadSpotInfos = apiRequester.requestRoadSpotInfos();
-        } catch (IllegalStateException e) {
+        } catch (ApiErrorCodeException e) {
             log.warn(e.getMessage());
         }
         if (roadSpotInfos == null) {
@@ -88,7 +89,7 @@ public class ApplicationSetup {
             List<RoadInfoDto> roadInfoDtos = null;
             try {
                 roadInfoDtos = apiRequester.requestRoadVolInfo(roadId, date, time);
-            } catch (IllegalStateException e) {
+            } catch (ApiErrorCodeException e) {
                 log.warn(e.getMessage());
             }
             if (roadInfoDtos == null) {

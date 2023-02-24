@@ -3,6 +3,7 @@ package com.projec.protest1.contorller;
 import com.projec.protest1.domain.RoadSpotInfo;
 import com.projec.protest1.dto.RoadInfoDto;
 import com.projec.protest1.dto.RoadInfoSearchDto;
+import com.projec.protest1.exception.ApiErrorCodeException;
 import com.projec.protest1.exceptionapi.ValidationResult;
 import com.projec.protest1.service.RoadService;
 import com.projec.protest1.validation.RoadInfoValidator;
@@ -46,7 +47,7 @@ public class RoadController {
 
     // https://data.seoul.go.kr/dataList/OA-13316/A/1/datasetView.do
     @GetMapping("/api/road-info")
-    public List<RoadInfoDto> getRoadInfo(@Validated @ModelAttribute RoadInfoSearchDto risDto, BindingResult bindingResult) throws BindException {
+    public List<RoadInfoDto> getRoadInfo(@Validated @ModelAttribute RoadInfoSearchDto risDto, BindingResult bindingResult) throws BindException, ApiErrorCodeException {
         
         if (bindingResult.hasErrors()) {
             throw new BindException(bindingResult);
