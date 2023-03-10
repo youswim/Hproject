@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <title>교통정보 확인 :: 카메라 조회</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="js/func.js"></script>
+    <script src="js/camera.js"></script>
     <link rel="stylesheet" href="css/mdb.min.css"/>
     <style>
         .outer {
@@ -67,7 +67,7 @@
 </head>
 
 <!-- <body onload="createImageLayer()"> -->
-<body onload="createImageLayer()">
+<body>
 
 <div class="outer">
     <div class="content">
@@ -76,7 +76,7 @@
         </div>
 
         <div id="webcam">
-            <img src="http://192.168.55.2:8091/?action=snapshot"/>
+            <img src="http://192.168.45.36:8091/?action=stream"/>
 
 
         </div>
